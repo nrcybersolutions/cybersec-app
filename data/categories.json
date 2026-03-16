@@ -1,29 +1,8 @@
 [
-  {
-    "id": "DR-001",
-    "level1": "Study",
-    "level2": "Cyber",
-    "level3": "Roadmap",
-    "item_name": "KQL Basics",
-    "type": "link",
-    "link": "https://learn.microsoft.com"
-  },
-  {
-    "id": "DR-002",
-    "level1": "Cooking",
-    "level2": "Veg",
-    "level3": "Rice",
-    "item_name": "Fried Rice",
-    "type": "video",
-    "link": "https://youtube.com"
-  },
-  {
-    "id": "DR-003",
-    "level1": "General",
-    "level2": "Life",
-    "level3": "",
-    "item_name": "Temple Visit",
-    "type": "text",
-    "link": ""
-  }
+ { "id": 1, "category_name": "Incident Handling", "description": "SOC incident investigation playbooks", "status": "active" },
+ { "id": 2, "category_name": "IOC Investigation", "description": "IP, URL, Hash analysis", "status": "active" },
+ { "id": 3, "category_name": "Logs & Telemetry", "description": "Logs used during investigations", "status": "active" },
+ { "id": 4, "category_name": "Networking Knowledge", "description": "Ports, CIDR, DNS, IP", "status": "active" },
+ { "id": 5, "category_name": "OSINT Tools", "description": "External investigation tools", "status": "active" },
+ { "id": 6, "category_name": "Security Concepts", "description": "MITRE, attack patterns", "status": "active" }
 ]
