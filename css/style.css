@@ -1,29 +1,51 @@
-[
-  {
-    "id": "DR-001",
-    "level1": "Study",
-    "level2": "Cyber",
-    "level3": "Roadmap",
-    "item_name": "KQL Basics",
-    "type": "link",
-    "link": "https://learn.microsoft.com"
-  },
-  {
-    "id": "DR-002",
-    "level1": "Cooking",
-    "level2": "Veg",
-    "level3": "Rice",
-    "item_name": "Fried Rice",
-    "type": "video",
-    "link": "https://youtube.com"
-  },
-  {
-    "id": "DR-003",
-    "level1": "General",
-    "level2": "Life",
-    "level3": "",
-    "item_name": "Temple Visit",
-    "type": "text",
-    "link": ""
-  }
-]
+body{
+font-family: Arial;
+margin:0;
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#020617;
+padding:15px;
+text-align:center;
+}
+
+.container{
+display:flex;
+height:90vh;
+}
+
+.panel{
+flex:1;
+border-right:1px solid #334155;
+padding:15px;
+overflow:auto;
+}
+
+.left{
+background:#020617;
+}
+
+.center{
+background:#020617;
+}
+
+.right{
+background:#020617;
+}
+
+button{
+display:block;
+width:100%;
+margin:5px 0;
+padding:10px;
+background:#1e293b;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#334155;
+}
