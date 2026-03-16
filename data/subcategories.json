@@ -1,0 +1,15 @@
+[
+ { "id":1, "category_id":1, "subcategory_name":"Phishing" },
+ { "id":2, "category_id":1, "subcategory_name":"Malware" },
+ { "id":3, "category_id":1, "subcategory_name":"Business Email Compromise" },
+ { "id":4, "category_id":1, "subcategory_name":"Credential Compromise" },
+ { "id":5, "category_id":1, "subcategory_name":"Ransomware" },
+
+ { "id":10, "category_id":2, "subcategory_name":"IP Address Investigation" },
+ { "id":11, "category_id":2, "subcategory_name":"Domain / URL Investigation" },
+ { "id":12, "category_id":2, "subcategory_name":"File Hash Investigation" },
+
+ { "id":20, "category_id":3, "subcategory_name":"Authentication Logs" },
+ { "id":21, "category_id":3, "subcategory_name":"Endpoint Logs" },
+ { "id":22, "category_id":3, "subcategory_name":"Network Logs" }
+]
