@@ -95,35 +95,69 @@ subContainer.appendChild(btn)
 }
 
 // 🔥 TOOL OPEN LOGIC
+
 window.openTool = function(baseUrl){
 
 const inputBox = document.getElementById("iocInput")
 const ioc = inputBox ? inputBox.value.trim() : ""
 
-// If empty → open homepage
 if(!ioc){
 window.open(baseUrl, "_blank")
 return
 }
 
+const type = detectIOCType(ioc)
+
 let finalUrl = baseUrl
 
-// VirusTotal
+// 🔥 Smart mapping
+
 if(baseUrl.includes("virustotal")){
 finalUrl = `https://www.virustotal.com/gui/search/${ioc}`
 }
 
-// URLScan
 else if(baseUrl.includes("urlscan")){
 finalUrl = `https://urlscan.io/search/#${ioc}`
 }
 
-// Default fallback
-else{
-finalUrl = baseUrl
+else if(baseUrl.includes("phishtank")){
+finalUrl = `https://phishtank.com/search.php?query=${ioc}`
+}
+
+// Optional future (example)
+else if(baseUrl.includes("shodan") && type === "ip"){
+finalUrl = `https://www.shodan.io/host/${ioc}`
 }
 
 window.open(finalUrl, "_blank")
+
+}
+
+  // Latest mar 16 1139
+function detectIOCType(ioc){
+
+// IP
+if(/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)){
+return "ip"
+}
+
+// URL
+if(ioc.startsWith("http")){
+return "url"
+}
+
+// Domain
+if(ioc.includes(".") && !ioc.includes(" ")){
+return "domain"
+}
+
+// Hash (basic)
+if(ioc.length >= 32){
+return "hash"
+}
+
+return "unknown"
+}
 
 }
 
