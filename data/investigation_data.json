@@ -1,0 +1,79 @@
+[
+ {
+   "subcategory_id": 1,
+   "name": "Phishing",
+
+   "overview": "Email-based attack to steal credentials or deliver malware",
+
+   "indicators": [
+     "Suspicious sender domain",
+     "Urgent language",
+     "URL mismatch",
+     "Attachment with macros"
+   ],
+
+   "logs": [
+     "Email logs",
+     "Defender for O365",
+     "User click events",
+     "Proxy logs"
+   ],
+
+   "tools": [
+     "VirusTotal",
+     "URLScan",
+     "PhishTank",
+     "MXToolbox"
+   ],
+
+   "containment": [
+     "Block sender/domain",
+     "Reset user password",
+     "Revoke sessions",
+     "Remove email from inboxes"
+   ],
+
+   "mitre": [
+     "Initial Access",
+     "Credential Access"
+   ]
+ },
+
+ {
+   "subcategory_id": 2,
+   "name": "Malware",
+
+   "overview": "Malicious software execution on endpoint",
+
+   "indicators": [
+     "Encoded PowerShell",
+     "Suspicious process",
+     "Temp folder execution",
+     "Outbound C2 traffic"
+   ],
+
+   "logs": [
+     "EDR logs",
+     "Process creation logs",
+     "File creation logs"
+   ],
+
+   "tools": [
+     "VirusTotal",
+     "Any.Run",
+     "Hybrid Analysis"
+   ],
+
+   "containment": [
+     "Isolate endpoint",
+     "Kill process",
+     "Remove file"
+   ],
+
+   "mitre": [
+     "Execution",
+     "Persistence",
+     "Defense Evasion"
+   ]
+ }
+]
