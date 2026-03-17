@@ -131,9 +131,7 @@ finalUrl = `https://www.shodan.io/host/${ioc}`
 
 window.open(finalUrl, "_blank")
 
-}
 
-  // Latest mar 16 1139
 function detectIOCType(ioc){
 
 // IP
@@ -160,6 +158,10 @@ return "unknown"
 }
 
 }
+
+
+
+
 
 // Start app
 loadCategories()
