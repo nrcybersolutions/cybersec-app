@@ -95,7 +95,7 @@ subContainer.appendChild(btn)
 }
 
 // 🔥 TOOL OPEN LOGIC
-function openTool(baseUrl){
+window.openTool = function(baseUrl){
 
 const inputBox = document.getElementById("iocInput")
 const ioc = inputBox ? inputBox.value.trim() : ""
