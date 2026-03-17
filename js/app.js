@@ -1,167 +1,149 @@
-async function loadCategories(){
+// ================= LOAD CATEGORIES =================
+async function loadCategories() {
+  try {
+    const response = await fetch("./data/categories.json");
+    const categories = await response.json();
 
-const response = await fetch("./data/categories.json")
-const categories = await response.json()
+    const container = document.getElementById("categories");
+    container.innerHTML = "";
 
-const container = document.getElementById("categories")
-container.innerHTML = ""
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.innerText = cat.category_name;
 
-categories.forEach(cat =>{
+      btn.onclick = () => showCategory(cat);
 
-const btn = document.createElement("button")
-btn.innerText = cat.category_name
+      container.appendChild(btn);
+    });
 
-btn.onclick = () => showCategory(cat)
-
-container.appendChild(btn)
-
-})
-
+  } catch (err) {
+    console.error("Error loading categories:", err);
+    document.getElementById("categories").innerHTML = "Failed to load categories";
+  }
 }
 
-// Load subcategories
-async function showCategory(cat){
+// ================= LOAD SUBCATEGORIES =================
+async function showCategory(cat) {
+  try {
+    document.getElementById("details").innerHTML =
+      `<h3>${cat.category_name}</h3><p>${cat.description}</p>`;
 
-document.getElementById("details").innerHTML =
-`<h3>${cat.category_name}</h3><p>${cat.description}</p>`
+    const response = await fetch("./data/subcategories.json");
+    const subs = await response.json();
 
-const response = await fetch("./data/subcategories.json")
-const subs = await response.json()
+    const subContainer = document.getElementById("subcategories");
+    subContainer.innerHTML = "";
 
-const subContainer = document.getElementById("subcategories")
-subContainer.innerHTML = ""
+    subs
+      .filter(s => s.category_id === cat.id)
+      .forEach(sub => {
 
-subs
-.filter(s => s.category_id === cat.id)
-.forEach(sub =>{
+        const btn = document.createElement("button");
+        btn.innerText = sub.subcategory_name;
 
-const btn = document.createElement("button")
-btn.innerText = sub.subcategory_name
+        btn.onclick = () => showInvestigation(sub);
 
-btn.onclick = async () => {
+        subContainer.appendChild(btn);
 
-const res = await fetch("./data/investigation_data.json")
-const data = await res.json()
+      });
 
-const item = data.find(d => d.subcategory_id === sub.id)
-
-if(!item){
-document.getElementById("details").innerHTML = `<h3>${sub.subcategory_name}</h3>`
-return
+  } catch (err) {
+    console.error("Error loading subcategories:", err);
+  }
 }
 
-// 🔥 FULL DETAILS + IOC INPUT + CLICKABLE TOOLS
-document.getElementById("details").innerHTML = `
-<h2>${item.name}</h2>
+// ================= LOAD INVESTIGATION =================
+async function showInvestigation(sub) {
+  try {
+    const res = await fetch("./data/investigation_data.json");
+    const data = await res.json();
 
-<h3>Overview</h3>
-<p>${item.overview}</p>
+    const item = data.find(d => d.subcategory_id === sub.id);
 
-<h3>Indicators</h3>
-<ul>${item.indicators.map(i=>`<li>${i}</li>`).join("")}</ul>
+    if (!item) {
+      document.getElementById("details").innerHTML = `<h3>${sub.subcategory_name}</h3>`;
+      return;
+    }
 
-<h3>Logs to Check</h3>
-<ul>${item.logs.map(i=>`<li>${i}</li>`).join("")}</ul>
+    document.getElementById("details").innerHTML = `
+      <h2>${item.name}</h2>
 
-<h3>IOC Input</h3>
-<input id="iocInput" placeholder="Enter IP / URL / Hash"
-style="width:100%; padding:8px; margin-bottom:10px;" />
+      <h3>Overview</h3>
+      <p>${item.overview}</p>
 
-<h3>Tools</h3>
-<ul>
-${item.tools.map(t=>`
-<li>
-<button onclick="openTool('${t.link}')"
-style="width:100%; text-align:left;">
-${t.name}
-</button>
-</li>
-`).join("")}
-</ul>
+      <h3>Indicators</h3>
+      <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
 
-<h3>Containment</h3>
-<ul>${item.containment.map(i=>`<li>${i}</li>`).join("")}</ul>
+      <h3>Logs to Check</h3>
+      <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
 
-<h3>MITRE</h3>
-<ul>${item.mitre.map(i=>`<li>${i}</li>`).join("")}</ul>
-`
+      <h3>IOC Input</h3>
+      <input id="iocInput" placeholder="Enter IP / URL / Hash"
+      style="width:100%; padding:8px; margin-bottom:10px;" />
 
+      <h3>Tools</h3>
+      <ul>
+        ${item.tools.map(t => `
+          <li>
+            <button onclick="openTool('${t.link}')"
+            style="width:100%; text-align:left;">
+              ${t.name}
+            </button>
+          </li>
+        `).join("")}
+      </ul>
+
+      <h3>Containment</h3>
+      <ul>${item.containment.map(i => `<li>${i}</li>`).join("")}</ul>
+
+      <h3>MITRE</h3>
+      <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
+    `;
+
+  } catch (err) {
+    console.error("Error loading investigation:", err);
+  }
 }
 
-subContainer.appendChild(btn)
-
-})
-
+// ================= IOC DETECTION =================
+function detectIOCType(ioc) {
+  if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
+  if (ioc.startsWith("http")) return "url";
+  if (ioc.includes(".")) return "domain";
+  if (ioc.length >= 32) return "hash";
+  return "unknown";
 }
 
-// 🔥 TOOL OPEN LOGIC
+// ================= TOOL OPEN =================
+window.openTool = function (baseUrl) {
 
-window.openTool = function(baseUrl){
+  const inputBox = document.getElementById("iocInput");
+  const ioc = inputBox ? inputBox.value.trim() : "";
 
-const inputBox = document.getElementById("iocInput")
-const ioc = inputBox ? inputBox.value.trim() : ""
+  if (!ioc) {
+    window.open(baseUrl, "_blank");
+    return;
+  }
 
-if(!ioc){
-window.open(baseUrl, "_blank")
-return
-}
+  const type = detectIOCType(ioc);
 
-const type = detectIOCType(ioc)
+  let finalUrl = baseUrl;
 
-let finalUrl = baseUrl
+  if (baseUrl.includes("virustotal")) {
+    finalUrl = `https://www.virustotal.com/gui/search/${ioc}`;
+  }
+  else if (baseUrl.includes("urlscan")) {
+    finalUrl = `https://urlscan.io/search/#${ioc}`;
+  }
+  else if (baseUrl.includes("phishtank")) {
+    finalUrl = `https://phishtank.com/search.php?query=${ioc}`;
+  }
+  else if (baseUrl.includes("shodan") && type === "ip") {
+    finalUrl = `https://www.shodan.io/host/${ioc}`;
+  }
 
-// 🔥 Smart mapping
+  window.open(finalUrl, "_blank");
+};
 
-if(baseUrl.includes("virustotal")){
-finalUrl = `https://www.virustotal.com/gui/search/${ioc}`
-}
-
-else if(baseUrl.includes("urlscan")){
-finalUrl = `https://urlscan.io/search/#${ioc}`
-}
-
-else if(baseUrl.includes("phishtank")){
-finalUrl = `https://phishtank.com/search.php?query=${ioc}`
-}
-
-// Optional future (example)
-else if(baseUrl.includes("shodan") && type === "ip"){
-finalUrl = `https://www.shodan.io/host/${ioc}`
-}
-
-window.open(finalUrl, "_blank")
-
-
-function detectIOCType(ioc){
-
-// IP
-if(/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)){
-return "ip"
-}
-
-// URL
-if(ioc.startsWith("http")){
-return "url"
-}
-
-// Domain
-if(ioc.includes(".") && !ioc.includes(" ")){
-return "domain"
-}
-
-// Hash (basic)
-if(ioc.length >= 32){
-return "hash"
-}
-
-return "unknown"
-}
-
-}
-
-
-
-
-
-// Start app
-loadCategories()
+// ================= INIT =================
+loadCategories();
