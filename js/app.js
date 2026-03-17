@@ -50,7 +50,7 @@ document.getElementById("details").innerHTML = `<h3>${sub.subcategory_name}</h3>
 return
 }
 
-// 🔥 FULL DETAILS WITH CLICKABLE TOOLS
+// 🔥 FULL DETAILS + IOC INPUT + CLICKABLE TOOLS
 document.getElementById("details").innerHTML = `
 <h2>${item.name}</h2>
 
@@ -63,13 +63,18 @@ document.getElementById("details").innerHTML = `
 <h3>Logs to Check</h3>
 <ul>${item.logs.map(i=>`<li>${i}</li>`).join("")}</ul>
 
+<h3>IOC Input</h3>
+<input id="iocInput" placeholder="Enter IP / URL / Hash"
+style="width:100%; padding:8px; margin-bottom:10px;" />
+
 <h3>Tools</h3>
 <ul>
 ${item.tools.map(t=>`
 <li>
-<a href="${t.link}" target="_blank" style="color:#38bdf8;">
+<button onclick="openTool('${t.link}')"
+style="width:100%; text-align:left;">
 ${t.name}
-</a>
+</button>
 </li>
 `).join("")}
 </ul>
@@ -86,6 +91,39 @@ ${t.name}
 subContainer.appendChild(btn)
 
 })
+
+}
+
+// 🔥 TOOL OPEN LOGIC
+function openTool(baseUrl){
+
+const inputBox = document.getElementById("iocInput")
+const ioc = inputBox ? inputBox.value.trim() : ""
+
+// If empty → open homepage
+if(!ioc){
+window.open(baseUrl, "_blank")
+return
+}
+
+let finalUrl = baseUrl
+
+// VirusTotal
+if(baseUrl.includes("virustotal")){
+finalUrl = `https://www.virustotal.com/gui/search/${ioc}`
+}
+
+// URLScan
+else if(baseUrl.includes("urlscan")){
+finalUrl = `https://urlscan.io/search/#${ioc}`
+}
+
+// Default fallback
+else{
+finalUrl = baseUrl
+}
+
+window.open(finalUrl, "_blank")
 
 }
 
