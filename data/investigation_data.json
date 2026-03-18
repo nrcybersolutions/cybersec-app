@@ -561,5 +561,102 @@
     }
 
   ]
+},
+{
+  "subcategory_id": 7,
+  "name": "IOC Investigation (IP / URL / Hash)",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "IOC investigation involves analyzing indicators such as IP addresses, domains, URLs, and file hashes to determine if they are malicious and related to threat activity."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "Is the IOC malicious or benign?",
+        "Is it part of known threat campaigns?",
+        "What is the reputation score?",
+        "Is there any communication with this IOC?",
+        "What infrastructure is associated?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Known malicious IP/domain",
+        "Newly registered domain",
+        "Suspicious URL pattern",
+        "Unknown file hash",
+        "Connection to rare external IP"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Firewall logs",
+        "Proxy logs",
+        "DNS logs",
+        "EDR network connections",
+        "SIEM correlation logs"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
+        { "name": "AbuseIPDB", "link": "https://www.abuseipdb.com", "type": "ip" },
+        { "name": "IPInfo", "link": "https://ipinfo.io", "type": "ip" },
+        { "name": "GreyNoise", "link": "https://www.greynoise.io", "type": "ip" },
+        { "name": "MXToolbox", "link": "https://mxtoolbox.com", "type": "domain" },
+        { "name": "Whois Lookup", "link": "https://whois.domaintools.com", "type": "domain" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Block IP/domain at firewall",
+        "Block URL in proxy",
+        "Block hash in EDR",
+        "Add IOC to watchlist",
+        "Alert for future activity"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1071 – Application Layer Protocol",
+        "T1046 – Network Service Scanning",
+        "T1595 – Active Scanning"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Connections to known malicious IPs",
+        "DNS queries to rare domains",
+        "Outbound traffic to suspicious regions",
+        "File hash seen across endpoints",
+        "Beaconing pattern detection"
+      ]
+    }
+
+  ]
 }
 ]
