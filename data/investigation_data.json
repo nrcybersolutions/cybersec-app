@@ -659,6 +659,193 @@
 
   ]
 },
+
+ {
+  "subcategory_id": 8,
+  "name": "Windows / Endpoint Investigation",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Endpoint investigation focuses on analyzing system activity such as processes, files, registry, and user actions to detect suspicious or malicious behavior on a host."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "What process triggered the alert?",
+        "What is the parent-child process chain?",
+        "Is the file legitimate or malicious?",
+        "Any persistence mechanism?",
+        "Any suspicious network connections?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Suspicious process execution",
+        "Unknown executable in temp folder",
+        "Encoded PowerShell commands",
+        "Abnormal parent-child processes",
+        "Persistence via registry or startup"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Windows Event Logs",
+        "Sysmon logs",
+        "Process creation logs",
+        "File creation logs",
+        "Registry modification logs"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "Process Explorer", "link": "https://learn.microsoft.com/sysinternals", "type": "all" },
+        { "name": "Autoruns", "link": "https://learn.microsoft.com/sysinternals", "type": "all" },
+        { "name": "Procmon", "link": "https://learn.microsoft.com/sysinternals", "type": "all" },
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Isolate endpoint",
+        "Kill malicious process",
+        "Delete malicious file",
+        "Remove persistence",
+        "Reimage system if needed"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1059 – Command Execution",
+        "T1547 – Persistence",
+        "T1027 – Obfuscation"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Suspicious parent-child process chain",
+        "PowerShell encoded commands",
+        "Execution from temp directory",
+        "Unusual registry changes",
+        "Unknown executable execution"
+      ]
+    }
+
+  ]
+},
+{
+  "subcategory_id": 9,
+  "name": "Data Exfiltration / Suspicious Data Transfer",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Data exfiltration involves unauthorized transfer of sensitive data outside the organization, often using cloud services, external IPs, or covert channels."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "What data was transferred?",
+        "Where was data sent (IP/domain/cloud)?",
+        "Was data encrypted or compressed?",
+        "Is this normal user behavior?",
+        "Is there large volume transfer?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Large outbound data transfer",
+        "Upload to unknown external domain",
+        "Use of file sharing services",
+        "Unusual data access patterns",
+        "Data transfer outside business hours"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Proxy logs",
+        "Firewall logs",
+        "DLP alerts",
+        "Cloud access logs",
+        "Endpoint file access logs"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "Wireshark", "link": "https://www.wireshark.org", "type": "all" },
+        { "name": "Shodan", "link": "https://www.shodan.io", "type": "ip" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Block destination IP/domain",
+        "Disable user account",
+        "Stop data transfer process",
+        "Notify data protection team",
+        "Preserve evidence"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1041 – Exfiltration Over C2 Channel",
+        "T1567 – Exfiltration Over Web Services"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Large outbound traffic spikes",
+        "Upload to rare domains",
+        "Unusual file access before transfer",
+        "Repeated external uploads",
+        "Data transfer outside normal hours"
+      ]
+    }
+
+  ]
+},  
 {
   "subcategory_id": 10,
   "name": "IP Address Investigation",
