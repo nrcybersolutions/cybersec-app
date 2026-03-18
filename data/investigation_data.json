@@ -187,5 +187,190 @@
     }
 
   ]
-}
+},
+{
+  "subcategory_id": 3,
+  "name": "Business Email Compromise (BEC)",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "BEC is a targeted phishing attack where attackers impersonate executives or vendors to trick users into transferring money or sharing sensitive information."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "Is sender spoofed or compromised?",
+        "Was any payment requested?",
+        "Is there mailbox takeover involved?",
+        "Was conversation hijacked?",
+        "Any forwarding rules created?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "CEO/CFO impersonation",
+        "Urgent payment request",
+        "Change in bank details",
+        "Reply-to mismatch",
+        "Conversation hijacking"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Email logs",
+        "Mailbox audit logs",
+        "Sign-in logs",
+        "Message trace",
+        "Forwarding rule logs"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "MXToolbox", "link": "https://mxtoolbox.com", "type": "domain" },
+        { "name": "Whois Lookup", "link": "https://whois.domaintools.com", "type": "domain" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Block sender/domain",
+        "Notify finance team",
+        "Reset compromised account",
+        "Remove malicious rules",
+        "Monitor for further activity"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1566 – Phishing",
+        "T1078 – Valid Accounts"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Emails with financial keywords",
+        "New external sender pretending internal",
+        "Unusual reply-to address",
+        "High-risk domain similarity"
+      ]
+    }
+
+  ]
+},
+{
+  "subcategory_id": 4,
+  "name": "Credential Compromise",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Credential compromise occurs when an attacker gains access to valid user credentials and uses them to access systems, often leading to unauthorized access, privilege escalation, or data exfiltration."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "Was MFA enabled or bypassed?",
+        "Is there impossible travel detected?",
+        "Any suspicious sign-in location?",
+        "Was there mailbox rule creation?",
+        "Any privilege escalation observed?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Impossible travel login",
+        "Login from unusual country",
+        "Multiple failed login attempts",
+        "New MFA method added",
+        "Suspicious mailbox rules"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Entra ID sign-in logs",
+        "Audit logs",
+        "Conditional access logs",
+        "Mailbox audit logs",
+        "Defender identity alerts"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "HaveIBeenPwned", "link": "https://haveibeenpwned.com", "type": "domain" },
+        { "name": "AbuseIPDB", "link": "https://www.abuseipdb.com", "type": "ip" },
+        { "name": "IPInfo", "link": "https://ipinfo.io", "type": "ip" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Reset user password",
+        "Revoke all sessions",
+        "Remove malicious MFA methods",
+        "Disable account temporarily",
+        "Review and remove mailbox rules"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1078 – Valid Accounts",
+        "T1110 – Brute Force",
+        "T1556 – Modify Authentication Process"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Impossible travel alerts",
+        "Login from new device/location",
+        "Multiple failed login attempts",
+        "MFA fatigue detection",
+        "Suspicious mailbox rule creation"
+      ]
+    }
+
+  ]
+}  
 ]
