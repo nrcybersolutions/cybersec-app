@@ -1,79 +1,64 @@
 [
- {
-   "subcategory_id": 1,
-   "name": "Phishing",
+  {
+    "subcategory_id": 1,
+    "name": "Phishing",
+    "sections": [
 
-   "overview": "Email-based attack to steal credentials or deliver malware",
+      {
+        "title": "Overview",
+        "type": "text",
+        "content": "Email-based attack to steal credentials or deliver malware"
+      },
 
-   "indicators": [
-     "Suspicious sender domain",
-     "Urgent language",
-     "URL mismatch",
-     "Attachment with macros"
-   ],
+      {
+        "title": "Indicators",
+        "type": "list",
+        "content": [
+          "Suspicious sender domain",
+          "Urgent language",
+          "URL mismatch"
+        ]
+      },
 
-   "logs": [
-     "Email logs",
-     "Defender for O365",
-     "User click events",
-     "Proxy logs"
-   ],
+      {
+        "title": "Logs",
+        "type": "list",
+        "content": [
+          "Email logs",
+          "Defender O365 logs",
+          "Proxy logs"
+        ]
+      },
 
-"tools": [
-  { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
-  { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
-  { "name": "PhishTank", "link": "https://phishtank.com", "type": "url" },
-  { "name": "Shodan", "link": "https://www.shodan.io", "type": "ip" }
-],
+      {
+        "title": "Tools",
+        "type": "tools",
+        "content": [
+          { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+          { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
+          { "name": "PhishTank", "link": "https://phishtank.com", "type": "url" }
+        ]
+      },
 
-   "containment": [
-     "Block sender/domain",
-     "Reset user password",
-     "Revoke sessions",
-     "Remove email from inboxes"
-   ],
+      {
+        "title": "Containment",
+        "type": "list",
+        "content": [
+          "Block sender",
+          "Reset password",
+          "Revoke sessions"
+        ]
+      },
 
-   "mitre": [
-     "Initial Access",
-     "Credential Access"
-   ]
- },
+      {
+        "title": "MITRE",
+        "type": "list",
+        "content": [
+          "Initial Access",
+          "Credential Access"
+        ]
+      }
 
- {
-   "subcategory_id": 2,
-   "name": "Malware",
-
-   "overview": "Malicious software execution on endpoint",
-
-   "indicators": [
-     "Encoded PowerShell",
-     "Suspicious process",
-     "Temp folder execution",
-     "Outbound C2 traffic"
-   ],
-
-   "logs": [
-     "EDR logs",
-     "Process creation logs",
-     "File creation logs"
-   ],
-
-   "tools": [
-     { "name": "VirusTotal", "link": "https://www.virustotal.com" },
-     { "name": "Any.Run", "link": "https://any.run" },
-     { "name": "Hybrid Analysis", "link": "https://hybrid-analysis.com" }
-   ],
-
-   "containment": [
-     "Isolate endpoint",
-     "Kill process",
-     "Remove file"
-   ],
-
-   "mitre": [
-     "Execution",
-     "Persistence",
-     "Defense Evasion"
-   ]
- }
+    ]
+  }
 ]
