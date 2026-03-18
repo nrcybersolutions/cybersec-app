@@ -7,7 +7,7 @@
  { "id": 6, "category_id": 1, "subcategory_name": "Unauthorized Access / Suspicious Login" },
  { "id": 7, "category_id": 2, "subcategory_name": "IOC Investigation (IP / URL / Hash)" },
  { "id": 8, "category_id": 3, "subcategory_name": "Windows / Endpoint Investigation" },
-
+ { "id": 9, "category_id": 1, "subcategory_name": "Data Exfiltration / Suspicious Data Transfer" },
  { "id":10, "category_id":2, "subcategory_name":"IP Address Investigation" },
  { "id":11, "category_id":2, "subcategory_name":"Domain / URL Investigation" },
  { "id":12, "category_id":2, "subcategory_name":"File Hash Investigation" },
