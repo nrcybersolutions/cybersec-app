@@ -19,11 +19,12 @@
      "Proxy logs"
    ],
 
-   "tools": [
-     { "name": "VirusTotal", "link": "https://www.virustotal.com" },
-     { "name": "URLScan", "link": "https://urlscan.io" },
-     { "name": "PhishTank", "link": "https://phishtank.com" }
-   ],
+"tools": [
+  { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+  { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
+  { "name": "PhishTank", "link": "https://phishtank.com", "type": "url" },
+  { "name": "Shodan", "link": "https://www.shodan.io", "type": "ip" }
+],
 
    "containment": [
      "Block sender/domain",
