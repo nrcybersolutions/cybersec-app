@@ -4,9 +4,9 @@
  { "id":3, "category_id":1, "subcategory_name":"Business Email Compromise" },
  { "id":4, "category_id":1, "subcategory_name":"Credential Compromise" },
  { "id":5, "category_id":1, "subcategory_name":"Ransomware" },
-{ "id": 6, "category_id": 1, "subcategory_name": "Unauthorized Access / Suspicious Login" },
-{ "id": 7, "category_id": 2, "subcategory_name": "IOC Investigation (IP / URL / Hash)" },
-{ "id": 8, "category_id": 3, "subcategory_name": "Windows / Endpoint Investigation" },
+ { "id": 6, "category_id": 1, "subcategory_name": "Unauthorized Access / Suspicious Login" },
+ { "id": 7, "category_id": 2, "subcategory_name": "IOC Investigation (IP / URL / Hash)" },
+ { "id": 8, "category_id": 3, "subcategory_name": "Windows / Endpoint Investigation" },
 
  { "id":10, "category_id":2, "subcategory_name":"IP Address Investigation" },
  { "id":11, "category_id":2, "subcategory_name":"Domain / URL Investigation" },
