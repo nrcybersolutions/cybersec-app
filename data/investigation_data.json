@@ -372,5 +372,194 @@
     }
 
   ]
-}  
+},
+{
+  "subcategory_id": 5,
+  "name": "Ransomware",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Ransomware is a type of malware that encrypts files or systems and demands payment for decryption. Often involves lateral movement, persistence, and data exfiltration."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "How did initial access occur (phishing, RDP, exploit)?",
+        "Is lateral movement observed?",
+        "Which systems are impacted?",
+        "Any data exfiltration before encryption?",
+        "What ransomware family is detected?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Mass file encryption",
+        "Files renamed with extensions (.lock, .encrypted)",
+        "Ransom note files",
+        "High CPU/disk usage",
+        "Suspicious admin tool usage (PsExec, RDP)"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "EDR alerts (Defender / CrowdStrike)",
+        "Process creation logs",
+        "File modification logs",
+        "Network lateral movement logs",
+        "Authentication logs (RDP, SMB)"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "NoMoreRansom", "link": "https://www.nomoreransom.org", "type": "hash" },
+        { "name": "Any.Run", "link": "https://any.run", "type": "hash" },
+        { "name": "Hybrid Analysis", "link": "https://www.hybrid-analysis.com", "type": "hash" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Isolate infected systems immediately",
+        "Disable network access",
+        "Stop malicious processes",
+        "Block attacker IPs/domains",
+        "Preserve forensic evidence"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1486 – Data Encrypted for Impact",
+        "T1021 – Remote Services",
+        "T1078 – Valid Accounts",
+        "T1562 – Defense Evasion"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Rapid file modification events",
+        "Mass file rename activity",
+        "Execution of known ransomware tools",
+        "Unusual lateral movement",
+        "Abnormal admin tool usage"
+      ]
+    }
+
+  ]
+},
+{
+  "subcategory_id": 6,
+  "name": "Unauthorized Access / Suspicious Login",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Unauthorized access refers to suspicious or malicious login attempts where attackers try to gain access using stolen credentials, brute force, or session hijacking."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "Is the login location unusual?",
+        "Is this a known user device?",
+        "Was MFA triggered or bypassed?",
+        "Are there multiple failed login attempts?",
+        "Any suspicious activity after login?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Login from foreign location",
+        "Impossible travel",
+        "Multiple failed login attempts",
+        "Login from unknown device",
+        "Login at unusual time"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Entra ID sign-in logs",
+        "Authentication logs",
+        "Conditional access logs",
+        "VPN logs",
+        "Firewall logs"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "AbuseIPDB", "link": "https://www.abuseipdb.com", "type": "ip" },
+        { "name": "IPInfo", "link": "https://ipinfo.io", "type": "ip" },
+        { "name": "GreyNoise", "link": "https://www.greynoise.io", "type": "ip" },
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Reset user password",
+        "Revoke active sessions",
+        "Force MFA re-registration",
+        "Disable account temporarily",
+        "Block suspicious IP"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1078 – Valid Accounts",
+        "T1110 – Brute Force",
+        "T1021 – Remote Services"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Impossible travel detection",
+        "Login from risky IP",
+        "Multiple failed login attempts",
+        "Login from new country/device",
+        "MFA fatigue patterns"
+      ]
+    }
+
+  ]
+}
 ]
