@@ -1,4 +1,4 @@
-// LOAD CATEGORIES
+// ================= LOAD CATEGORIES =================
 async function loadCategories() {
   try {
     const res = await fetch("data/categories.json");
@@ -20,7 +20,7 @@ async function loadCategories() {
   }
 }
 
-// LOAD SUBCATEGORIES
+// ================= LOAD SUBCATEGORIES =================
 async function showCategory(cat) {
   try {
     document.getElementById("details").innerHTML =
@@ -46,7 +46,7 @@ async function showCategory(cat) {
   }
 }
 
-// LOAD INVESTIGATION DATA
+// ================= LOAD INVESTIGATION =================
 async function showInvestigation(sub) {
   try {
     const res = await fetch("data/investigation_data.json");
@@ -61,37 +61,63 @@ async function showInvestigation(sub) {
     }
 
     document.getElementById("details").innerHTML = `
+
       <h2>${item.name}</h2>
 
-      <h3>Overview</h3>
-      <p>${item.overview}</p>
+      <!-- Tabs -->
+      <div style="margin-bottom:10px;">
+        <button onclick="showTab('overview')">Overview</button>
+        <button onclick="showTab('indicators')">Indicators</button>
+        <button onclick="showTab('logs')">Logs</button>
+        <button onclick="showTab('tools')">Tools</button>
+        <button onclick="showTab('mitre')">MITRE</button>
+      </div>
 
-      <h3>Indicators</h3>
-      <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
+      <!-- OVERVIEW -->
+      <div id="tab-overview" class="tab">
+        <h3>Overview</h3>
+        <p>${item.overview}</p>
+      </div>
 
-      <h3>Logs</h3>
-      <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
+      <!-- INDICATORS -->
+      <div id="tab-indicators" class="tab" style="display:none;">
+        <h3>Indicators</h3>
+        <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
 
-      <h3>IOC Input</h3>
-      <input id="iocInput" placeholder="Enter IP / URL / Hash"
-      style="width:100%; padding:8px; margin-bottom:10px;" />
+      <!-- LOGS -->
+      <div id="tab-logs" class="tab" style="display:none;">
+        <h3>Logs</h3>
+        <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
 
-      <h3>Tools</h3>
-      <ul>
-        ${item.tools.map(t => `
-          <li>
-            <button onclick="openTool('${t.link}')">
-              ${t.name}
-            </button>
-          </li>
-        `).join("")}
-      </ul>
+      <!-- TOOLS -->
+      <div id="tab-tools" class="tab" style="display:none;">
 
-      <h3>Containment</h3>
-      <ul>${item.containment.map(i => `<li>${i}</li>`).join("")}</ul>
+        <h3>IOC Input</h3>
+        <input id="iocInput" placeholder="Enter IP / URL / Hash"
+        style="width:100%; padding:8px; margin-bottom:10px;" />
 
-      <h3>MITRE</h3>
-      <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
+        <h3>Tools</h3>
+        <ul>
+          ${item.tools.map(t => `
+            <li>
+              <button onclick="openTool('${t.link}')"
+              style="width:100%; text-align:left;">
+                ${t.name}
+              </button>
+            </li>
+          `).join("")}
+        </ul>
+
+      </div>
+
+      <!-- MITRE -->
+      <div id="tab-mitre" class="tab" style="display:none;">
+        <h3>MITRE</h3>
+        <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
+
     `;
 
   } catch (e) {
@@ -99,7 +125,17 @@ async function showInvestigation(sub) {
   }
 }
 
-// IOC TYPE
+// ================= TAB SWITCH =================
+window.showTab = function(tabName) {
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.style.display = "none";
+  });
+
+  const activeTab = document.getElementById("tab-" + tabName);
+  if (activeTab) activeTab.style.display = "block";
+};
+
+// ================= IOC DETECTION =================
 function detectIOCType(ioc) {
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
   if (ioc.startsWith("http")) return "url";
@@ -108,8 +144,8 @@ function detectIOCType(ioc) {
   return "unknown";
 }
 
-// TOOL OPEN
-window.openTool = function (baseUrl) {
+// ================= TOOL OPEN =================
+window.openTool = function(baseUrl) {
 
   const input = document.getElementById("iocInput");
   const ioc = input ? input.value.trim() : "";
@@ -120,6 +156,7 @@ window.openTool = function (baseUrl) {
   }
 
   let finalUrl = baseUrl;
+  const type = detectIOCType(ioc);
 
   if (baseUrl.includes("virustotal")) {
     finalUrl = `https://www.virustotal.com/gui/search/${ioc}`;
@@ -127,12 +164,12 @@ window.openTool = function (baseUrl) {
     finalUrl = `https://urlscan.io/search/#${ioc}`;
   } else if (baseUrl.includes("phishtank")) {
     finalUrl = `https://phishtank.com/search.php?query=${ioc}`;
-  } else if (baseUrl.includes("shodan")) {
+  } else if (baseUrl.includes("shodan") && type === "ip") {
     finalUrl = `https://www.shodan.io/host/${ioc}`;
   }
 
   window.open(finalUrl, "_blank");
 };
 
-// INIT
+// ================= INIT =================
 loadCategories();
