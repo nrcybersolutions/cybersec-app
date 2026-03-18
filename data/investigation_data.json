@@ -93,5 +93,99 @@
       }
 
     ]
-  }
+  },
+{
+  "subcategory_id": 2,
+  "name": "Malware",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "Malware refers to malicious software designed to disrupt, damage, or gain unauthorized access to systems. Includes trojans, ransomware, spyware, and loaders."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "How was malware delivered (email, download, USB)?",
+        "Which process executed the file?",
+        "Is there persistence?",
+        "Any lateral movement observed?",
+        "Is C2 communication present?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "Unknown process execution",
+        "Suspicious parent-child process",
+        "File in temp or downloads folder",
+        "Encoded PowerShell commands",
+        "Connections to suspicious IPs"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "EDR alerts (Defender / CrowdStrike)",
+        "Process creation logs",
+        "Sysmon logs",
+        "Network connection logs",
+        "File creation events"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+        { "name": "Any.Run", "link": "https://any.run", "type": "hash" },
+        { "name": "Hybrid Analysis", "link": "https://www.hybrid-analysis.com", "type": "hash" },
+        { "name": "Joe Sandbox", "link": "https://www.joesandbox.com", "type": "hash" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Isolate affected endpoint",
+        "Kill malicious process",
+        "Delete malicious file",
+        "Block hash across environment",
+        "Reimage system if required"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1059 – Command Execution",
+        "T1204 – User Execution",
+        "T1105 – Ingress Tool Transfer",
+        "T1027 – Obfuscated Files"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Unusual parent-child process chain",
+        "PowerShell encoded commands",
+        "Executable running from temp folder",
+        "Outbound connections to rare IPs"
+      ]
+    }
+
+  ]
+}
 ]
