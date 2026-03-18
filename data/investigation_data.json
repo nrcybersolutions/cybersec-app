@@ -3,11 +3,95 @@
     "subcategory_id": 1,
     "name": "Phishing",
     "sections": [
+
       {
         "title": "Overview",
         "type": "text",
-        "content": "NOW WORKING ✅"
+        "content": "Phishing is a social engineering attack where attackers impersonate trusted entities to steal credentials, deliver malware, or perform fraud."
+      },
+
+      {
+        "title": "Investigation Questions",
+        "type": "list",
+        "content": [
+          "Who received the email?",
+          "Was the link clicked?",
+          "Was any credential entered?",
+          "Is the email delivered to multiple users?",
+          "Is the sender domain spoofed?",
+          "Any mailbox rules created?"
+        ]
+      },
+
+      {
+        "title": "Indicators",
+        "type": "list",
+        "content": [
+          "Lookalike domain (micros0ft.com)",
+          "Urgent language",
+          "URL mismatch",
+          "Suspicious attachment",
+          "New domain registration"
+        ]
+      },
+
+      {
+        "title": "Logs",
+        "type": "list",
+        "content": [
+          "Email logs (Defender / Proofpoint)",
+          "Message trace",
+          "User click events",
+          "Entra ID sign-in logs",
+          "Mailbox audit logs",
+          "Proxy logs"
+        ]
+      },
+
+      {
+        "title": "Tools",
+        "type": "tools",
+        "content": [
+          { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
+          { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
+          { "name": "PhishTank", "link": "https://phishtank.com", "type": "url" },
+          { "name": "MXToolbox", "link": "https://mxtoolbox.com", "type": "domain" }
+        ]
+      },
+
+      {
+        "title": "Containment",
+        "type": "list",
+        "content": [
+          "Block sender/domain",
+          "Remove email from all mailboxes",
+          "Reset password",
+          "Revoke sessions",
+          "Enable MFA"
+        ]
+      },
+
+      {
+        "title": "MITRE Mapping",
+        "type": "list",
+        "content": [
+          "T1566 – Phishing",
+          "T1566.002 – Spearphishing Link",
+          "T1078 – Valid Accounts"
+        ]
+      },
+
+      {
+        "title": "Detection Ideas",
+        "type": "list",
+        "content": [
+          "Same email to multiple users",
+          "New domain observed",
+          "User clicked suspicious link",
+          "Impossible travel login"
+        ]
       }
+
     ]
   }
 ]
