@@ -3,30 +3,11 @@
     "subcategory_id": 1,
     "name": "Phishing",
     "sections": [
-
       {
         "title": "Overview",
         "type": "text",
-        "content": "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal credentials, deliver malware, or perform fraud."
-      },
-
-      {
-        "title": "Indicators",
-        "type": "list",
-        "content": [
-          "Suspicious sender domain",
-          "URL mismatch"
-        ]
-      },
-
-      {
-        "title": "Tools",
-        "type": "tools",
-        "content": [
-          { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" }
-        ]
+        "content": "NOW WORKING ✅"
       }
-
     ]
   }
 ]
