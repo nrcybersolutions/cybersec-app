@@ -658,5 +658,100 @@
     }
 
   ]
+},
+{
+  "subcategory_id": 10,
+  "name": "IP Address Investigation",
+  "sections": [
+
+    {
+      "title": "Overview",
+      "type": "text",
+      "content": "IP investigation involves analyzing an IP address to determine its reputation, ownership, geolocation, and whether it is associated with malicious activity."
+    },
+
+    {
+      "title": "Investigation Questions",
+      "type": "list",
+      "content": [
+        "Is the IP malicious or benign?",
+        "What is the geolocation of the IP?",
+        "Who owns the IP (ISP/ASN)?",
+        "Is the IP part of known threat activity?",
+        "Is it a VPN, proxy, or hosting provider?"
+      ]
+    },
+
+    {
+      "title": "Indicators",
+      "type": "list",
+      "content": [
+        "IP flagged in threat intelligence feeds",
+        "Multiple alerts from same IP",
+        "IP associated with botnet or scanning",
+        "Connection to rare or foreign region",
+        "Repeated failed login attempts from IP"
+      ]
+    },
+
+    {
+      "title": "Logs",
+      "type": "list",
+      "content": [
+        "Firewall logs",
+        "Proxy logs",
+        "VPN logs",
+        "Authentication logs",
+        "SIEM alerts"
+      ]
+    },
+
+    {
+      "title": "Tools",
+      "type": "tools",
+      "content": [
+        { "name": "AbuseIPDB", "link": "https://www.abuseipdb.com", "type": "ip" },
+        { "name": "IPInfo", "link": "https://ipinfo.io", "type": "ip" },
+        { "name": "GreyNoise", "link": "https://www.greynoise.io", "type": "ip" },
+        { "name": "Shodan", "link": "https://www.shodan.io", "type": "ip" },
+        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" }
+      ]
+    },
+
+    {
+      "title": "Containment",
+      "type": "list",
+      "content": [
+        "Block IP in firewall",
+        "Block IP in proxy",
+        "Add IP to SIEM watchlist",
+        "Trigger alert for future activity",
+        "Monitor related traffic"
+      ]
+    },
+
+    {
+      "title": "MITRE Mapping",
+      "type": "list",
+      "content": [
+        "T1071 – Application Layer Protocol",
+        "T1046 – Network Service Scanning",
+        "T1595 – Active Scanning"
+      ]
+    },
+
+    {
+      "title": "Detection Ideas",
+      "type": "list",
+      "content": [
+        "Multiple connections from same IP",
+        "IP contacting multiple endpoints",
+        "Repeated failed login attempts",
+        "Traffic from high-risk countries",
+        "Known malicious IP match"
+      ]
+    }
+
+  ]
 }
 ]
