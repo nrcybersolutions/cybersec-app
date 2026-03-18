@@ -1,141 +1,115 @@
-// ================= LOAD CATEGORIES =================
+// LOAD CATEGORIES
 async function loadCategories() {
-  try {
-    const res = await fetch("data/categories.json");
-    const categories = await res.json();
+  const res = await fetch("data/categories.json");
+  const categories = await res.json();
 
-    const container = document.getElementById("categories");
-    container.innerHTML = "";
+  const container = document.getElementById("categories");
+  container.innerHTML = "";
 
-    categories.forEach(cat => {
-      const btn = document.createElement("button");
-      btn.innerText = cat.category_name;
-      btn.onclick = () => showCategory(cat);
-      container.appendChild(btn);
-    });
-
-  } catch (e) {
-    console.error(e);
-    document.getElementById("categories").innerText = "Error loading categories";
-  }
-}
-
-// ================= LOAD SUBCATEGORIES =================
-async function showCategory(cat) {
-  try {
-    document.getElementById("details").innerHTML =
-      `<h3>${cat.category_name}</h3><p>${cat.description}</p>`;
-
-    const res = await fetch("data/subcategories.json");
-    const subs = await res.json();
-
-    const subContainer = document.getElementById("subcategories");
-    subContainer.innerHTML = "";
-
-    subs
-      .filter(s => s.category_id === cat.id)
-      .forEach(sub => {
-        const btn = document.createElement("button");
-        btn.innerText = sub.subcategory_name;
-        btn.onclick = () => showInvestigation(sub);
-        subContainer.appendChild(btn);
-      });
-
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// ================= LOAD INVESTIGATION =================
-async function showInvestigation(sub) {
-  try {
-    const res = await fetch("data/investigation_data.json");
-    const data = await res.json();
-
-    const item = data.find(d => d.subcategory_id === sub.id);
-
-    if (!item) {
-      document.getElementById("details").innerHTML =
-        `<h3>${sub.subcategory_name}</h3>`;
-      return;
-    }
-
-    document.getElementById("details").innerHTML = `
-
-      <h2>${item.name}</h2>
-
-      <!-- Tabs -->
-      <div style="margin-bottom:10px;">
-        <button onclick="showTab('overview')">Overview</button>
-        <button onclick="showTab('indicators')">Indicators</button>
-        <button onclick="showTab('logs')">Logs</button>
-        <button onclick="showTab('tools')">Tools</button>
-        <button onclick="showTab('mitre')">MITRE</button>
-      </div>
-
-      <!-- OVERVIEW -->
-      <div id="tab-overview" class="tab">
-        <h3>Overview</h3>
-        <p>${item.overview}</p>
-      </div>
-
-      <!-- INDICATORS -->
-      <div id="tab-indicators" class="tab" style="display:none;">
-        <h3>Indicators</h3>
-        <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
-      </div>
-
-      <!-- LOGS -->
-      <div id="tab-logs" class="tab" style="display:none;">
-        <h3>Logs</h3>
-        <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
-      </div>
-
-      <!-- TOOLS -->
-      <div id="tab-tools" class="tab" style="display:none;">
-
-        <h3>IOC Input</h3>
-        <input id="iocInput" placeholder="Enter IP / URL / Hash"
-        style="width:100%; padding:8px; margin-bottom:10px;" />
-
-        <h3>Tools</h3>
-        <ul>
-          ${item.tools.map(t => `
-            <li>
-              <button onclick="openTool('${t.link}')"
-              style="width:100%; text-align:left;">
-                ${t.name}
-              </button>
-            </li>
-          `).join("")}
-        </ul>
-
-      </div>
-
-      <!-- MITRE -->
-      <div id="tab-mitre" class="tab" style="display:none;">
-        <h3>MITRE</h3>
-        <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
-      </div>
-
-    `;
-
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// ================= TAB SWITCH =================
-window.showTab = function(tabName) {
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.style.display = "none";
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.innerText = cat.category_name;
+    btn.onclick = () => showCategory(cat);
+    container.appendChild(btn);
   });
+}
 
-  const activeTab = document.getElementById("tab-" + tabName);
-  if (activeTab) activeTab.style.display = "block";
+// LOAD SUBCATEGORIES
+async function showCategory(cat) {
+  document.getElementById("details").innerHTML =
+    `<h3>${cat.category_name}</h3><p>${cat.description}</p>`;
+
+  const res = await fetch("data/subcategories.json");
+  const subs = await res.json();
+
+  const subContainer = document.getElementById("subcategories");
+  subContainer.innerHTML = "";
+
+  subs
+    .filter(s => s.category_id === cat.id)
+    .forEach(sub => {
+      const btn = document.createElement("button");
+      btn.innerText = sub.subcategory_name;
+      btn.onclick = () => showInvestigation(sub);
+      subContainer.appendChild(btn);
+    });
+}
+
+// LOAD INVESTIGATION
+async function showInvestigation(sub) {
+  const res = await fetch("data/investigation_data.json");
+  const data = await res.json();
+
+  const item = data.find(d => d.subcategory_id === sub.id);
+
+  document.getElementById("details").innerHTML = `
+
+  <h2>${item.name}</h2>
+
+  <!-- TABS -->
+  <div>
+    <button onclick="showTab('overview')">Overview</button>
+    <button onclick="showTab('tools')">Tools</button>
+    <button onclick="showTab('logs')">Logs</button>
+    <button onclick="showTab('indicators')">Indicators</button>
+    <button onclick="showTab('mitre')">MITRE</button>
+    <button onclick="showTab('notes')">Notes</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab">
+    <p>${item.overview}</p>
+  </div>
+
+  <!-- INDICATORS -->
+  <div id="tab-indicators" class="tab" style="display:none;">
+    <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <!-- LOGS -->
+  <div id="tab-logs" class="tab" style="display:none;">
+    <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <!-- TOOLS -->
+  <div id="tab-tools" class="tab" style="display:none;">
+
+    <input id="iocInput" placeholder="Enter IOC"
+    oninput="filterTools()" style="width:100%; padding:8px;" />
+
+    <p id="iocType"></p>
+
+    <ul id="toolsList">
+      ${item.tools.map(t => `
+        <li data-type="${t.type}">
+          <button onclick="openTool('${t.link}')">${t.name}</button>
+        </li>
+      `).join("")}
+    </ul>
+
+  </div>
+
+  <!-- MITRE -->
+  <div id="tab-mitre" class="tab" style="display:none;">
+    <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <!-- NOTES -->
+  <div id="tab-notes" class="tab" style="display:none;">
+    <textarea id="notesBox" style="width:100%; height:100px;"></textarea>
+    <button onclick="saveNotes('${item.name}')">Save Notes</button>
+  </div>
+
+  `;
+}
+
+// TAB SWITCH
+window.showTab = function(tab) {
+  document.querySelectorAll(".tab").forEach(t => t.style.display = "none");
+  document.getElementById("tab-" + tab).style.display = "block";
 };
 
-// ================= IOC DETECTION =================
+// IOC DETECTION
 function detectIOCType(ioc) {
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
   if (ioc.startsWith("http")) return "url";
@@ -144,32 +118,67 @@ function detectIOCType(ioc) {
   return "unknown";
 }
 
-// ================= TOOL OPEN =================
-window.openTool = function(baseUrl) {
+// TOOL FILTER
+window.filterTools = function() {
+  const ioc = document.getElementById("iocInput").value.trim();
+  const type = detectIOCType(ioc);
 
-  const input = document.getElementById("iocInput");
-  const ioc = input ? input.value.trim() : "";
+  document.getElementById("iocType").innerText =
+    ioc ? "Detected: " + type : "";
+
+  document.querySelectorAll("#toolsList li").forEach(li => {
+    const t = li.getAttribute("data-type");
+    li.style.display = (!ioc || t === "all" || t === type) ? "block" : "none";
+  });
+};
+
+// TOOL OPEN
+window.openTool = function(baseUrl) {
+  const ioc = document.getElementById("iocInput").value.trim();
 
   if (!ioc) {
-    window.open(baseUrl, "_blank");
+    window.open(baseUrl);
     return;
   }
 
-  let finalUrl = baseUrl;
-  const type = detectIOCType(ioc);
+  let url = baseUrl;
 
-  if (baseUrl.includes("virustotal")) {
-    finalUrl = `https://www.virustotal.com/gui/search/${ioc}`;
-  } else if (baseUrl.includes("urlscan")) {
-    finalUrl = `https://urlscan.io/search/#${ioc}`;
-  } else if (baseUrl.includes("phishtank")) {
-    finalUrl = `https://phishtank.com/search.php?query=${ioc}`;
-  } else if (baseUrl.includes("shodan") && type === "ip") {
-    finalUrl = `https://www.shodan.io/host/${ioc}`;
-  }
+  if (baseUrl.includes("virustotal"))
+    url = `https://www.virustotal.com/gui/search/${ioc}`;
+  else if (baseUrl.includes("urlscan"))
+    url = `https://urlscan.io/search/#${ioc}`;
 
-  window.open(finalUrl, "_blank");
+  window.open(url);
 };
 
-// ================= INIT =================
+// SAVE NOTES
+window.saveNotes = function(name) {
+  const notes = document.getElementById("notesBox").value;
+  localStorage.setItem("notes_" + name, notes);
+  alert("Notes saved");
+};
+
+// GLOBAL SEARCH
+window.globalSearch = async function() {
+  const query = document.getElementById("globalSearch").value.toLowerCase();
+
+  const res = await fetch("data/subcategories.json");
+  const subs = await res.json();
+
+  const filtered = subs.filter(s =>
+    s.subcategory_name.toLowerCase().includes(query)
+  );
+
+  const container = document.getElementById("subcategories");
+  container.innerHTML = "";
+
+  filtered.forEach(sub => {
+    const btn = document.createElement("button");
+    btn.innerText = sub.subcategory_name;
+    btn.onclick = () => showInvestigation(sub);
+    container.appendChild(btn);
+  });
+};
+
+// INIT
 loadCategories();
