@@ -1,96 +1,32 @@
-{
-  "subcategory_id": 1,
-  "name": "Phishing",
-  "sections": [
+[
+  {
+    "subcategory_id": 1,
+    "name": "Phishing",
+    "sections": [
 
-    {
-      "title": "Overview",
-      "type": "text",
-      "content": "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal credentials, deliver malware, or perform fraud."
-    },
+      {
+        "title": "Overview",
+        "type": "text",
+        "content": "Phishing is a social engineering attack where attackers impersonate legitimate entities to steal credentials, deliver malware, or perform fraud."
+      },
 
-    {
-      "title": "Investigation Questions",
-      "type": "list",
-      "content": [
-        "Who received the email?",
-        "Was the link clicked?",
-        "Was any credential entered?",
-        "Is the email delivered to multiple users?",
-        "Is the sender domain spoofed or legitimate?",
-        "Are there mailbox rules created?"
-      ]
-    },
+      {
+        "title": "Indicators",
+        "type": "list",
+        "content": [
+          "Suspicious sender domain",
+          "URL mismatch"
+        ]
+      },
 
-    {
-      "title": "Indicators",
-      "type": "list",
-      "content": [
-        "Lookalike domain (micros0ft.com)",
-        "Urgent language (account locked, action required)",
-        "Mismatched URL vs displayed link",
-        "Unexpected attachment",
-        "New domain registration"
-      ]
-    },
+      {
+        "title": "Tools",
+        "type": "tools",
+        "content": [
+          { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" }
+        ]
+      }
 
-    {
-      "title": "Logs",
-      "type": "list",
-      "content": [
-        "Email logs (Defender / Proofpoint)",
-        "Message trace logs",
-        "User click events",
-        "Sign-in logs (Entra ID)",
-        "Mailbox audit logs",
-        "Proxy / Web logs"
-      ]
-    },
-
-    {
-      "title": "Tools",
-      "type": "tools",
-      "content": [
-        { "name": "VirusTotal", "link": "https://www.virustotal.com", "type": "all" },
-        { "name": "URLScan", "link": "https://urlscan.io", "type": "url" },
-        { "name": "MXToolbox", "link": "https://mxtoolbox.com", "type": "domain" },
-        { "name": "Whois Lookup", "link": "https://whois.domaintools.com", "type": "domain" },
-        { "name": "PhishTank", "link": "https://phishtank.com", "type": "url" }
-      ]
-    },
-
-    {
-      "title": "Containment",
-      "type": "list",
-      "content": [
-        "Block sender and domain",
-        "Remove email from all mailboxes",
-        "Reset user password",
-        "Revoke active sessions",
-        "Enable MFA if not enabled"
-      ]
-    },
-
-    {
-      "title": "MITRE Mapping",
-      "type": "list",
-      "content": [
-        "T1566 – Phishing",
-        "T1566.002 – Spearphishing Link",
-        "T1078 – Valid Accounts"
-      ]
-    },
-
-    {
-      "title": "Detection Ideas",
-      "type": "list",
-      "content": [
-        "Multiple users receiving similar email",
-        "New domain detected in email traffic",
-        "User clicking suspicious links",
-        "Impossible travel after credential entry"
-      ]
-    }
-
-  ]
-}
+    ]
+  }
+]
