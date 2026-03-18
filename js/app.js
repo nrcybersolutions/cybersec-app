@@ -35,81 +35,79 @@ async function showCategory(cat) {
     });
 }
 
-// LOAD INVESTIGATION
+// LOAD INVESTIGATION (DYNAMIC)
 async function showInvestigation(sub) {
   const res = await fetch("data/investigation_data.json");
   const data = await res.json();
 
   const item = data.find(d => d.subcategory_id === sub.id);
 
-  document.getElementById("details").innerHTML = `
+  if (!item) {
+    document.getElementById("details").innerHTML =
+      `<h3>${sub.subcategory_name}</h3>`;
+    return;
+  }
 
-  <h2>${item.name}</h2>
+  let html = `<h2>${item.name}</h2>`;
 
-  <!-- TABS -->
-  <div>
-    <button onclick="showTab('overview')">Overview</button>
-    <button onclick="showTab('tools')">Tools</button>
-    <button onclick="showTab('logs')">Logs</button>
-    <button onclick="showTab('indicators')">Indicators</button>
-    <button onclick="showTab('mitre')">MITRE</button>
-    <button onclick="showTab('notes')">Notes</button>
-  </div>
+  // Tabs
+  html += `<div id="tabs"></div><div id="tabContent"></div>`;
 
-  <!-- OVERVIEW -->
-  <div id="tab-overview" class="tab">
-    <p>${item.overview}</p>
-  </div>
+  document.getElementById("details").innerHTML = html;
 
-  <!-- INDICATORS -->
-  <div id="tab-indicators" class="tab" style="display:none;">
-    <ul>${item.indicators.map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+  const tabsDiv = document.getElementById("tabs");
+  const contentDiv = document.getElementById("tabContent");
 
-  <!-- LOGS -->
-  <div id="tab-logs" class="tab" style="display:none;">
-    <ul>${item.logs.map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+  item.sections.forEach((sec, index) => {
 
-  <!-- TOOLS -->
-  <div id="tab-tools" class="tab" style="display:none;">
+    // Create tab button
+    const btn = document.createElement("button");
+    btn.innerText = sec.title;
 
-    <input id="iocInput" placeholder="Enter IOC"
-    oninput="filterTools()" style="width:100%; padding:8px;" />
+    btn.onclick = () => renderSection(sec);
 
-    <p id="iocType"></p>
+    tabsDiv.appendChild(btn);
 
-    <ul id="toolsList">
-      ${item.tools.map(t => `
-        <li data-type="${t.type}">
-          <button onclick="openTool('${t.link}')">${t.name}</button>
-        </li>
-      `).join("")}
-    </ul>
+    // Auto open first tab
+    if (index === 0) renderSection(sec);
 
-  </div>
-
-  <!-- MITRE -->
-  <div id="tab-mitre" class="tab" style="display:none;">
-    <ul>${item.mitre.map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
-
-  <!-- NOTES -->
-  <div id="tab-notes" class="tab" style="display:none;">
-    <textarea id="notesBox" style="width:100%; height:100px;"></textarea>
-    <button onclick="saveNotes('${item.name}')">Save Notes</button>
-  </div>
-
-  `;
+  });
 }
 
-// TAB SWITCH
-window.showTab = function(tab) {
-  document.querySelectorAll(".tab").forEach(t => t.style.display = "none");
-  document.getElementById("tab-" + tab).style.display = "block";
-};
+// RENDER SECTION
+function renderSection(section) {
 
-// IOC DETECTION
+  let html = `<h3>${section.title}</h3>`;
+
+  if (section.type === "text") {
+    html += `<p>${section.content}</p>`;
+  }
+
+  if (section.type === "list") {
+    html += `<ul>${section.content.map(i => `<li>${i}</li>`).join("")}</ul>`;
+  }
+
+  if (section.type === "tools") {
+    html += `
+      <input id="iocInput" placeholder="Enter IOC"
+      oninput="filterTools()" style="width:100%; padding:8px;" />
+
+      <p id="iocType"></p>
+
+      <ul id="toolsList">
+        ${section.content.map(t => `
+          <li data-type="${t.type}">
+            <button onclick="openTool('${t.link}')">${t.name}</button>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+  }
+
+  document.getElementById("tabContent").innerHTML = html;
+}
+
+// IOC TYPE
 function detectIOCType(ioc) {
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
   if (ioc.startsWith("http")) return "url";
@@ -118,7 +116,7 @@ function detectIOCType(ioc) {
   return "unknown";
 }
 
-// TOOL FILTER
+// FILTER TOOLS
 window.filterTools = function() {
   const ioc = document.getElementById("iocInput").value.trim();
   const type = detectIOCType(ioc);
@@ -132,9 +130,9 @@ window.filterTools = function() {
   });
 };
 
-// TOOL OPEN
+// OPEN TOOL
 window.openTool = function(baseUrl) {
-  const ioc = document.getElementById("iocInput").value.trim();
+  const ioc = document.getElementById("iocInput")?.value.trim();
 
   if (!ioc) {
     window.open(baseUrl);
@@ -149,35 +147,6 @@ window.openTool = function(baseUrl) {
     url = `https://urlscan.io/search/#${ioc}`;
 
   window.open(url);
-};
-
-// SAVE NOTES
-window.saveNotes = function(name) {
-  const notes = document.getElementById("notesBox").value;
-  localStorage.setItem("notes_" + name, notes);
-  alert("Notes saved");
-};
-
-// GLOBAL SEARCH
-window.globalSearch = async function() {
-  const query = document.getElementById("globalSearch").value.toLowerCase();
-
-  const res = await fetch("data/subcategories.json");
-  const subs = await res.json();
-
-  const filtered = subs.filter(s =>
-    s.subcategory_name.toLowerCase().includes(query)
-  );
-
-  const container = document.getElementById("subcategories");
-  container.innerHTML = "";
-
-  filtered.forEach(sub => {
-    const btn = document.createElement("button");
-    btn.innerText = sub.subcategory_name;
-    btn.onclick = () => showInvestigation(sub);
-    container.appendChild(btn);
-  });
 };
 
 // INIT
