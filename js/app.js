@@ -35,58 +35,54 @@ async function showCategory(cat) {
     });
 }
 
-// LOAD INVESTIGATION (DYNAMIC)
+// LOAD INVESTIGATION
 async function showInvestigation(sub) {
   const res = await fetch("data/investigation_data.json");
   const data = await res.json();
 
   const item = data.find(d => d.subcategory_id === sub.id);
 
-  if (!item) {
-    document.getElementById("details").innerHTML =
-      `<h3>${sub.subcategory_name}</h3>`;
-    return;
-  }
-
-  let html = `<h2>${item.name}</h2>`;
-
-  // Tabs
+  let html = `<h2>${sub.subcategory_name}</h2>`;
   html += `<div id="tabs"></div><div id="tabContent"></div>`;
 
   document.getElementById("details").innerHTML = html;
 
   const tabsDiv = document.getElementById("tabs");
-  const contentDiv = document.getElementById("tabContent");
 
-  item.sections.forEach((sec, index) => {
+  // 🔥 ADD IOC GUIDE TAB (ALWAYS AVAILABLE)
+  const guideBtn = document.createElement("button");
+  guideBtn.innerText = "IOC Guide";
+  guideBtn.onclick = () => renderIOCGuide();
+  tabsDiv.appendChild(guideBtn);
 
-    // Create tab button
-    const btn = document.createElement("button");
-    btn.innerText = sec.title;
+  // EXISTING TABS
+  if (item) {
+    item.sections.forEach((sec, index) => {
+      const btn = document.createElement("button");
+      btn.innerText = sec.title;
+      btn.onclick = () => renderSection(sec);
+      tabsDiv.appendChild(btn);
 
-    btn.onclick = () => renderSection(sec);
-
-    tabsDiv.appendChild(btn);
-
-    // Auto open first tab
-    if (index === 0) renderSection(sec);
-
-  });
+      if (index === 0) renderSection(sec);
+    });
+  }
 }
 
 // RENDER SECTION
 function renderSection(section) {
-
   let html = `<h3>${section.title}</h3>`;
 
+  // TEXT
   if (section.type === "text") {
     html += `<p>${section.content}</p>`;
   }
 
+  // LIST
   if (section.type === "list") {
     html += `<ul>${section.content.map(i => `<li>${i}</li>`).join("")}</ul>`;
   }
 
+  // TOOLS
   if (section.type === "tools") {
     html += `
       <input id="iocInput" placeholder="Enter IOC"
@@ -97,7 +93,9 @@ function renderSection(section) {
       <ul id="toolsList">
         ${section.content.map(t => `
           <li data-type="${t.type}">
-            <button onclick="openTool('${t.link}')">${t.name}</button>
+            <button title="${t.desc || ""}" onclick="openTool('${t.link}')">
+              ${t.name}
+            </button>
           </li>
         `).join("")}
       </ul>
@@ -107,11 +105,62 @@ function renderSection(section) {
   document.getElementById("tabContent").innerHTML = html;
 }
 
-// IOC TYPE
+// 🔥 LOAD IOC GUIDE (NEW)
+async function renderIOCGuide() {
+  const res = await fetch("data/ioc_guide.json");
+  const data = await res.json();
+
+  window.iocGuideData = data;
+
+  let html = `
+    <h3>IOC Quick Guide</h3>
+
+    <select id="iocDropdown" onchange="showIOCGuide()">
+      <option value="">-- Select IOC Type --</option>
+      ${data.map(i => `<option value="${i.type}">${i.label}</option>`).join("")}
+    </select>
+
+    <div id="iocGuideContent" style="margin-top:15px;"></div>
+  `;
+
+  document.getElementById("tabContent").innerHTML = html;
+}
+
+// 🔥 DISPLAY IOC GUIDE DETAILS
+window.showIOCGuide = function() {
+  const selected = document.getElementById("iocDropdown").value;
+  const guide = window.iocGuideData.find(i => i.type === selected);
+
+  if (!guide) return;
+
+  const html = `
+    <h4>${guide.label}</h4>
+
+    <b>Where to Check:</b>
+    <ul>${guide.where_to_check.map(i => `<li>${i}</li>`).join("")}</ul>
+
+    <b>What to Check:</b>
+    <ul>${guide.what_to_check.map(i => `<li>${i}</li>`).join("")}</ul>
+
+    <b>Recommended Tools:</b>
+    <ul>
+      ${guide.tools.map(t => `
+        <li>
+          <button onclick="window.open('${t.link}')">${t.name}</button>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+
+  document.getElementById("iocGuideContent").innerHTML = html;
+};
+
+// IOC TYPE DETECTION
 function detectIOCType(ioc) {
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
   if (ioc.startsWith("http")) return "url";
   if (ioc.length >= 32) return "hash";
+  if (ioc.includes("@")) return "email";
   if (ioc.includes(".")) return "domain";
   return "unknown";
 }
