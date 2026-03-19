@@ -10,5 +10,77 @@
       { "name": "Shodan", "link": "https://shodan.io" },
       { "name": "IPinfo", "link": "https://ipinfo.io" }
     ]
+  },
+
+  {
+    "type": "domain",
+    "label": "Domain",
+    "where_to_check": ["WHOIS Lookup", "DNS Records", "Passive DNS"],
+    "what_to_check": [
+      "Domain age (new domains = risky)",
+      "Registrar info",
+      "DNS changes / history",
+      "Blacklist / reputation"
+    ],
+    "tools": [
+      { "name": "DomainTools", "link": "https://whois.domaintools.com" },
+      { "name": "SecurityTrails", "link": "https://securitytrails.com" },
+      { "name": "MXToolbox", "link": "https://mxtoolbox.com" },
+      { "name": "VirusTotal", "link": "https://virustotal.com" }
+    ]
+  },
+
+  {
+    "type": "url",
+    "label": "URL",
+    "where_to_check": ["URL Sandbox", "Reputation Check", "Redirect Analysis"],
+    "what_to_check": [
+      "Final redirect destination",
+      "Phishing patterns (login pages)",
+      "Malicious payloads",
+      "Domain reputation behind URL"
+    ],
+    "tools": [
+      { "name": "URLScan", "link": "https://urlscan.io" },
+      { "name": "VirusTotal", "link": "https://virustotal.com" },
+      { "name": "PhishTank", "link": "https://phishtank.org" },
+      { "name": "Google Safe Browsing", "link": "https://transparencyreport.google.com" }
+    ]
+  },
+
+  {
+    "type": "hash",
+    "label": "File Hash",
+    "where_to_check": ["Malware Databases", "Sandbox Analysis", "Threat Intel"],
+    "what_to_check": [
+      "Detection ratio",
+      "Malware family",
+      "Behavior indicators",
+      "Associated IPs/domains"
+    ],
+    "tools": [
+      { "name": "VirusTotal", "link": "https://virustotal.com" },
+      { "name": "MalwareBazaar", "link": "https://bazaar.abuse.ch" },
+      { "name": "Hybrid Analysis", "link": "https://hybrid-analysis.com" },
+      { "name": "AnyRun", "link": "https://any.run" }
+    ]
+  },
+
+  {
+    "type": "email",
+    "label": "Email",
+    "where_to_check": ["Header Analysis", "Authentication Checks", "Threat Intel"],
+    "what_to_check": [
+      "SPF/DKIM/DMARC results",
+      "Sender spoofing",
+      "Mail relay path",
+      "Suspicious links or attachments"
+    ],
+    "tools": [
+      { "name": "MXToolbox", "link": "https://mxtoolbox.com" },
+      { "name": "Google Header Analyzer", "link": "https://toolbox.googleapps.com" },
+      { "name": "Microsoft Header Analyzer", "link": "https://mha.azurewebsites.net" },
+      { "name": "PhishTank", "link": "https://phishtank.org" }
+    ]
   }
 ]
