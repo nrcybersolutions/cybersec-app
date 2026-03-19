@@ -102,7 +102,20 @@ function renderSection(section) {
     `;
   }
 
-  document.getElementById("tabContent").innerHTML = html;
+  document.getElementById("tabContent").innerHTML = html + `
+  <div style="margin-top:20px;">
+    <h3>Notes</h3>
+
+    <textarea id="noteInput" placeholder="Add investigation note..."
+      style="width:100%; height:80px;"></textarea>
+
+    <button onclick="saveNote()">Save Note</button>
+
+    <ul id="notesList"></ul>
+  </div>
+`;
+
+loadNotes();
 }
 
 // 🔥 LOAD IOC GUIDE (NEW)
@@ -123,7 +136,20 @@ async function renderIOCGuide() {
     <div id="iocGuideContent" style="margin-top:15px;"></div>
   `;
 
-  document.getElementById("tabContent").innerHTML = html;
+  document.getElementById("tabContent").innerHTML = html + `
+  <div style="margin-top:20px;">
+    <h3>Notes</h3>
+
+    <textarea id="noteInput" placeholder="Add investigation note..."
+      style="width:100%; height:80px;"></textarea>
+
+    <button onclick="saveNote()">Save Note</button>
+
+    <ul id="notesList"></ul>
+  </div>
+`;
+
+loadNotes();
 }
 
 // 🔥 DISPLAY IOC GUIDE DETAILS
@@ -234,6 +260,41 @@ async function renderIOCGuideDirect(sub) {
   `;
 
   document.getElementById("details").innerHTML = html;
+}
+
+// SAVE NOTE
+function saveNote() {
+  const input = document.getElementById("noteInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  let notes = JSON.parse(localStorage.getItem("soc_notes")) || [];
+
+  notes.push({
+    text: text,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("soc_notes", JSON.stringify(notes));
+  input.value = "";
+
+  loadNotes();
+}
+
+// LOAD NOTES
+function loadNotes() {
+  const notes = JSON.parse(localStorage.getItem("soc_notes")) || [];
+  const list = document.getElementById("notesList");
+
+  if (!list) return;
+
+  list.innerHTML = notes.map(n => `
+    <li>
+      ${n.text}<br>
+      <small>${n.date}</small>
+    </li>
+  `).join("");
 }
 
 // INIT
