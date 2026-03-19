@@ -50,11 +50,12 @@ async function showInvestigation(sub) {
   const tabsDiv = document.getElementById("tabs");
 
   // 🔥 ADD IOC GUIDE TAB (ALWAYS AVAILABLE)
+  if (sub.category_id === 5) {
   const guideBtn = document.createElement("button");
   guideBtn.innerText = "IOC Guide";
   guideBtn.onclick = () => renderIOCGuide();
   tabsDiv.appendChild(guideBtn);
-
+}
   // EXISTING TABS
   if (item) {
     item.sections.forEach((sec, index) => {
