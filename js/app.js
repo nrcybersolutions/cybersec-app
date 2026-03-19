@@ -198,5 +198,43 @@ window.openTool = function(baseUrl) {
   window.open(url);
 };
 
+async function renderIOCGuideDirect(sub) {
+  const res = await fetch("data/ioc_guide.json");
+  const data = await res.json();
+
+  // map subcategory → IOC type
+  const map = {
+    "IP Tools": "ip",
+    "Domain Tools": "domain",
+    "URL Tools": "url",
+    "Hash Tools": "hash",
+    "Email Tools": "email"
+  };
+
+  const type = map[sub.subcategory_name];
+  const guide = data.find(i => i.type === type);
+
+  if (!guide) return;
+
+  const html = `
+    <h2>${sub.subcategory_name}</h2>
+
+    <h3>Where to Check</h3>
+    <ul>${guide.where_to_check.map(i => `<li>${i}</li>`).join("")}</ul>
+
+    <h3>What to Check</h3>
+    <ul>${guide.what_to_check.map(i => `<li>${i}</li>`).join("")}</ul>
+
+    <h3>Recommended Tools</h3>
+    <ul>
+      ${guide.tools.map(t => `
+        <li><button onclick="window.open('${t.link}')">${t.name}</button></li>
+      `).join("")}
+    </ul>
+  `;
+
+  document.getElementById("details").innerHTML = html;
+}
+
 // INIT
 loadCategories();
