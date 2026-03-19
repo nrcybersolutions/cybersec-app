@@ -51,12 +51,11 @@ async function showInvestigation(sub) {
 
   // 🔥 ADD IOC GUIDE TAB (ALWAYS AVAILABLE)
   if (sub.category_id === 5) {
-  const guideBtn = document.createElement("button");
-  guideBtn.innerText = "IOC Guide";
-  guideBtn.onclick = () => renderIOCGuide();
-  tabsDiv.appendChild(guideBtn);
+  renderIOCGuideDirect(sub);
+  return;
 }
-  // EXISTING TABS
+  
+ // EXISTING TABS
   if (item) {
     item.sections.forEach((sec, index) => {
       const btn = document.createElement("button");
