@@ -45,7 +45,20 @@ async function showInvestigation(sub) {
   let html = `<h2>${sub.subcategory_name}</h2>`;
   html += `<div id="tabs"></div><div id="tabContent"></div>`;
 
-  document.getElementById("details").innerHTML = html;
+  document.getElementById("details").innerHTML = html + `
+  <div style="margin-top:20px;">
+    <h3>Notes</h3>
+
+    <textarea id="noteInput" placeholder="Add investigation note..."
+      style="width:100%; height:80px;"></textarea>
+
+    <button onclick="saveNote()">Save Note</button>
+
+    <ul id="notesList"></ul>
+  </div>
+`;
+
+loadNotes();
 
   const tabsDiv = document.getElementById("tabs");
 
@@ -259,7 +272,20 @@ async function renderIOCGuideDirect(sub) {
     </ul>
   `;
 
-  document.getElementById("details").innerHTML = html;
+  document.getElementById("details").innerHTML = html + `
+  <div style="margin-top:20px;">
+    <h3>Notes</h3>
+
+    <textarea id="noteInput" placeholder="Add investigation note..."
+      style="width:100%; height:80px;"></textarea>
+
+    <button onclick="saveNote()">Save Note</button>
+
+    <ul id="notesList"></ul>
+  </div>
+`;
+
+loadNotes();
 }
 
 // SAVE NOTE
