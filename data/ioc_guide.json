@@ -1,0 +1,14 @@
+[
+  {
+    "type": "ip",
+    "label": "IP Address",
+    "where_to_check": ["Reputation", "Geolocation", "Infrastructure"],
+    "what_to_check": ["Malicious reports", "ASN / Country", "Open ports"],
+    "tools": [
+      { "name": "VirusTotal", "link": "https://virustotal.com" },
+      { "name": "AbuseIPDB", "link": "https://abuseipdb.com" },
+      { "name": "Shodan", "link": "https://shodan.io" },
+      { "name": "IPinfo", "link": "https://ipinfo.io" }
+    ]
+  }
+]
