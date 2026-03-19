@@ -14,5 +14,13 @@
 
  { "id":20, "category_id":3, "subcategory_name":"Authentication Logs" },
  { "id":21, "category_id":3, "subcategory_name":"Endpoint Logs" },
- { "id":22, "category_id":3, "subcategory_name":"Network Logs" }
+ { "id":22, "category_id":3, "subcategory_name":"Network Logs" },
+
+
+ { "id": 30, "category_id": 5, "subcategory_name": "IP Tools" },
+ { "id": 31, "category_id": 5, "subcategory_name": "Domain Tools" },
+ { "id": 32, "category_id": 5, "subcategory_name": "URL Tools" },
+ { "id": 33, "category_id": 5, "subcategory_name": "Hash Tools" },
+ { "id": 34, "category_id": 5, "subcategory_name": "Email Tools" }
+
 ]
