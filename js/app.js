@@ -48,14 +48,31 @@ if (cat.id === 7) {
 
     const header = document.createElement("h4");
     header.innerText = groupName;
+    header.style.cursor = "pointer";
+    header.style.background = "#1e2a38";
+    header.style.padding = "8px";
     header.style.marginTop = "10px";
+
+    // container for items
+    const groupDiv = document.createElement("div");
+    groupDiv.style.display = "none"; // hidden by default
+
+    // toggle logic
+    header.onclick = () => {
+      groupDiv.style.display =
+        groupDiv.style.display === "none" ? "block" : "none";
+    };
+    
     subContainer.appendChild(header);
+    subContainer.appendChild(groupDiv);
+
+
 
     groups[groupName].forEach(sub => {
       const btn = document.createElement("button");
       btn.innerText = sub.subcategory_name;
       btn.onclick = () => showInvestigation(sub);
-      subContainer.appendChild(btn);
+      groupDiv.appendChild(btn);
     });
   });
 
