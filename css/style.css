@@ -1,51 +1,83 @@
-body{
-font-family: Arial;
-margin:0;
-background:#0f172a;
-color:white;
+/* GLOBAL FONT */
+body {
+  font-family: Calibri, Arial, sans-serif;
+  background-color: #0f172a;
+  color: #ffffff;
+  margin: 0;
 }
 
-header{
-background:#020617;
-padding:15px;
-text-align:center;
+/* HEADINGS */
+h2 {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.container{
-display:flex;
-height:90vh;
+h3 {
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.panel{
-flex:1;
-border-right:1px solid #334155;
-padding:15px;
-overflow:auto;
+h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #cbd5e1;
 }
 
-.left{
-background:#020617;
+/* CATEGORY BUTTONS */
+#categories button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
 
-.center{
-background:#020617;
+#categories button:hover {
+  background-color: #334155;
 }
 
-.right{
-background:#020617;
+/* SUBCATEGORY BUTTONS */
+#subcategories button {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0;
+  font-size: 13px;
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
 
-button{
-display:block;
-width:100%;
-margin:5px 0;
-padding:10px;
-background:#1e293b;
-border:none;
-color:white;
-cursor:pointer;
+#subcategories button:hover {
+  background-color: #475569;
 }
 
-button:hover{
-background:#334155;
+/* GROUP HEADERS (Fundamentals, etc.) */
+#subcategories h4 {
+  background-color: #1e2a38;
+  padding: 6px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+/* DETAILS PANEL */
+#details {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* NOTES */
+textarea {
+  font-family: Calibri, Arial, sans-serif;
+  font-size: 13px;
+}
+
+button {
+  font-family: Calibri, Arial, sans-serif;
+  font-size: 13px;
 }
