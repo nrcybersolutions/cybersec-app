@@ -283,13 +283,32 @@ function loadNotes(key) {
 
   const current = notes[key] || [];
 
-  list.innerHTML = current.map(n => `
-    <li>
-      ${n.text}<br>
+  list.innerHTML = current.map((n, index) => `
+    <li style="margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span>${n.text}</span>
+        <button onclick="deleteNote('${key}', ${index})"
+          style="font-size:10px; padding:2px 6px; margin-left:10px;">
+          🗑
+        </button>
+      </div>
       <small>${n.date}</small>
     </li>
   `).join("");
 }
+
+function deleteNote(key, index) {
+  let notes = JSON.parse(localStorage.getItem("soc_notes")) || {};
+
+  if (!notes[key]) return;
+
+  notes[key].splice(index, 1);
+
+  localStorage.setItem("soc_notes", JSON.stringify(notes));
+
+  loadNotes(key);
+}
+
 
 // IOC DETECTION
 function detectIOCType(ioc) {
