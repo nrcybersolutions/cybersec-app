@@ -22,8 +22,28 @@
  { "id": 32, "category_id": 5, "subcategory_name": "URL Tools" },
  { "id": 33, "category_id": 5, "subcategory_name": "Hash Tools" },
  { "id": 34, "category_id": 5, "subcategory_name": "Email Tools" },
-
  { "id": 101, "category_id": 7, "subcategory_name": "SEG1 – Windows Operating System" },
- { "id": 102, "category_id": 7, "subcategory_name": "SEG2 – Networking Foundations" }
+ { "id": 102, "category_id": 7, "subcategory_name": "SEG2 – Networking Foundations" },
+ { "id": 103, "category_id": 7, "subcategory_name": "SEG3 – Security Mindset & Analytical Thinking" },
+ { "id": 104, "category_id": 7, "subcategory_name": "SEG4 – Scripting & Programming" },
+ { "id": 105, "category_id": 7, "subcategory_name": "SEG5 – Logs, Alerts & Incident Investigation" },
+ { "id": 106, "category_id": 7, "subcategory_name": "SEG6 – Phishing & Unauthorized Access Handling" },
+ { "id": 107, "category_id": 7, "subcategory_name": "SEG7 – Offensive, Defensive & Cloud Security Basics" },
+ { "id": 108, "category_id": 7, "subcategory_name": "SEG8 – Labs, Home Projects & Hands-on Practice" },
+ { "id": 109, "category_id": 7, "subcategory_name": "NIST Cybersecurity Framework" },
+ { "id": 110, "category_id": 7, "subcategory_name": "MITRE ATT&CK Framework" },
+ { "id": 111, "category_id": 7, "subcategory_name": "SOC Analyst Interview Preparation" },
+ { "id": 112, "category_id": 7, "subcategory_name": "Threat Hunting Concepts" },
+ { "id": 113, "category_id": 7, "subcategory_name": "Digital Forensics Fundamentals" },
+ { "id": 114, "category_id": 7, "subcategory_name": "Cloud Security (Azure / AWS)" },
+ { "id": 115, "category_id": 7, "subcategory_name": "Cybersecurity Book – The Web Application Hacker’s Handbook" },
+ { "id": 116, "category_id": 7, "subcategory_name": "Cybersecurity Book – Blue Team Handbook" },
+ { "id": 117, "category_id": 7, "subcategory_name": "Cybersecurity Book – Practical Malware Analysis" },
+ { "id": 118, "category_id": 7, "subcategory_name": "Cybersecurity Book – The Hacker Playbook" },
+ { "id": 119, "category_id": 7, "subcategory_name": "Cybersecurity Book – Incident Response & Computer Forensics" },
+ { "id": 120, "category_id": 7, "subcategory_name": "Cybersecurity Book – Security Engineering (Ross Anderson)" }
+
+
+ 
 
 ]
