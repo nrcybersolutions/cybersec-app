@@ -21,17 +21,40 @@ async function loadCategories() {
 
 // LOAD SUBCATEGORIES
 async function showCategory(cat) {
-  document.getElementById("details").innerHTML =
-    `<h3>${cat.category_name}</h3><p>${cat.description || ""}</p>`;
 
-  const res = await fetch("./data/subcategories.json");
-  const subs = await res.json();
-
+  // Reset UI
   const subContainer = document.getElementById("subcategories");
+  const details = document.getElementById("details");
+
   subContainer.innerHTML = "";
+  details.innerHTML = `<h3>${cat.category_name}</h3><p>${cat.description || ""}</p>`;
 
+  try {
+    const res = await fetch("./data/subcategories.json");
+    const subs = await res.json();
 
-  const filteredSubs = subs.filter(s => s.category_id === cat.id);
+    const filteredSubs = subs.filter(s => s.category_id === cat.id);
+
+    filteredSubs.forEach(sub => {
+      const btn = document.createElement("button");
+      btn.innerText = sub.subcategory_name;
+
+      btn.onclick = () => {
+        showInvestigation(sub);
+      };
+
+      subContainer.appendChild(btn);
+    });
+
+    // Auto load first
+    if (filteredSubs.length > 0) {
+      showInvestigation(filteredSubs[0]);
+    }
+
+  } catch (e) {
+    console.error("Subcategory load error:", e);
+  }
+}
 
 // 🔥 GROUP ONLY FOR STUDY INDEX
 if (cat.id === 7) {
