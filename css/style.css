@@ -3,23 +3,24 @@
 body {
   margin: 0;
   font-family: Calibri, Arial, sans-serif;
-  background-color: #0f172a;
-  color: #ffffff;
+  background: #0b1220; /* deep dark */
+  color: #e2e8f0;
 }
 
 /* HEADER */
 header {
-  padding: 10px 20px;
-  background-color: #0f172a;
-  border-bottom: 1px solid #334155;
+  padding: 12px 20px;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
 }
 
 h1 {
   margin: 0;
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: 600;
 }
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 .container {
   display: flex;
   height: calc(100vh - 60px);
@@ -27,18 +28,18 @@ h1 {
 
 /* PANELS */
 .panel {
-  padding: 10px;
+  padding: 12px;
   overflow-y: auto;
 }
 
 .left {
   width: 20%;
-  border-right: 1px solid #334155;
+  border-right: 1px solid #1e293b;
 }
 
 .center {
   width: 30%;
-  border-right: 1px solid #334155;
+  border-right: 1px solid #1e293b;
 }
 
 .right {
@@ -47,57 +48,90 @@ h1 {
 
 /* HEADINGS */
 h2 {
-  font-size: 16px;
+  font-size: 17px;
   margin-bottom: 10px;
+  color: #cbd5f5;
 }
 
 h3 {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 h4 {
   font-size: 14px;
-  background-color: #1e2a38;
-  padding: 6px;
+  background: #111827;
+  padding: 6px 8px;
   margin-top: 10px;
+  border-left: 3px solid #3b82f6;
   cursor: pointer;
 }
 
-/* BUTTONS */
+/* BUTTONS (HD STYLE) */
 button {
   width: 100%;
-  padding: 8px;
-  margin: 4px 0;
-  font-size: 13px;
+  padding: 9px 10px;
+  margin: 5px 0;
+  font-size: 14px;
   font-family: Calibri, Arial, sans-serif;
-  background-color: #1e293b;
-  color: #e2e8f0;
-  border: none;
+
+  background: #111827;
+  color: #e5e7eb;
+
+  border: 1px solid #1f2937;
+  border-radius: 4px;
+
   text-align: left;
   cursor: pointer;
+
+  transition: all 0.2s ease;
 }
 
+/* HOVER */
 button:hover {
-  background-color: #475569;
+  background: #1f2937;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* ACTIVE CLICK FEEL */
+button:active {
+  transform: scale(0.98);
 }
 
 /* DETAILS */
 #details {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-/* NOTES */
+/* TEXTAREA */
 textarea {
   width: 100%;
-  height: 80px;
+  height: 90px;
+  font-size: 14px;
   font-family: Calibri, Arial, sans-serif;
-  font-size: 13px;
-  margin-top: 5px;
+  margin-top: 8px;
+
+  background: #111827;
+  color: #fff;
+  border: 1px solid #1f2937;
+  border-radius: 4px;
 }
 
 /* INPUT */
 input {
-  font-family: Calibri, Arial, sans-serif;
+  background: #111827;
+  color: white;
+  border: 1px solid #1f2937;
+  padding: 8px;
+}
+
+/* SCROLLBAR (OPTIONAL CLEAN LOOK) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
 }
 ```
