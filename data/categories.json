@@ -4,5 +4,6 @@
  { "id": 3, "category_name": "Logs & Telemetry", "description": "Logs used during investigations", "status": "active" },
  { "id": 4, "category_name": "Networking Knowledge", "description": "Ports, CIDR, DNS, IP", "status": "active" },
  { "id": 5, "category_name": "OSINT Tools", "description": "External investigation tools", "status": "active" },
- { "id": 6, "category_name": "Security Concepts", "description": "MITRE, attack patterns", "status": "active" }
+ { "id": 6, "category_name": "Security Concepts", "description": "MITRE, attack patterns", "status": "active" },
+ { "id": 7,  "category_name": "Study Index", "description": "Cybersecurity learning roadmap"}
 ]
