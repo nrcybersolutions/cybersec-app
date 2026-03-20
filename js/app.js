@@ -1,4 +1,3 @@
-```javascript
 // LOAD CATEGORIES
 async function loadCategories() {
   try {
@@ -326,4 +325,3 @@ window.openTool = function (baseUrl) {
 
 // INIT
 loadCategories();
-```
