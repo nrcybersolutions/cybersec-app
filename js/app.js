@@ -25,14 +25,19 @@ async function showCategory(cat) {
   const subContainer = document.getElementById("subcategories");
   subContainer.innerHTML = "";
 
-  subs
-    .filter(s => s.category_id === cat.id)
-    .forEach(sub => {
-      const btn = document.createElement("button");
-      btn.innerText = sub.subcategory_name;
-      btn.onclick = () => showInvestigation(sub);
-      subContainer.appendChild(btn);
-    });
+  const filteredSubs = subs.filter(s => s.category_id === cat.id);
+
+  filteredSubs.forEach(sub => {
+    const btn = document.createElement("button");
+    btn.innerText = sub.subcategory_name;
+    btn.onclick = () => showInvestigation(sub);
+    subContainer.appendChild(btn);
+  });
+
+  // 🔥 AUTO LOAD FIRST
+  if (filteredSubs.length > 0) {
+    showInvestigation(filteredSubs[0]);
+  }
 }
 
 // LOAD INVESTIGATION / STUDY / OSINT
@@ -62,7 +67,6 @@ async function showInvestigation(sub) {
 
   const tabsDiv = document.getElementById("tabs");
 
-  // EXISTING TABS
   if (item) {
     item.sections.forEach((sec, index) => {
       const btn = document.createElement("button");
@@ -79,17 +83,14 @@ async function showInvestigation(sub) {
 function renderSection(section, subName) {
   let html = `<h3>${section.title}</h3>`;
 
-  // TEXT
   if (section.type === "text") {
     html += `<p>${section.content}</p>`;
   }
 
-  // LIST
   if (section.type === "list") {
     html += `<ul>${section.content.map(i => `<li>${i}</li>`).join("")}</ul>`;
   }
 
-  // TOOLS
   if (section.type === "tools") {
     html += `
       <input id="iocInput" placeholder="Enter IOC"
@@ -109,12 +110,13 @@ function renderSection(section, subName) {
     `;
   }
 
-  document.getElementById("tabContent").innerHTML = html + getNotesHTML(subName);
+  document.getElementById("tabContent").innerHTML =
+    html + getNotesHTML(subName);
 
   loadNotes(subName);
 }
 
-// 🔥 OSINT DIRECT (NO DROPDOWN)
+// 🔥 OSINT DIRECT
 async function renderIOCGuideDirect(sub) {
   const res = await fetch("data/ioc_guide.json");
   const data = await res.json();
@@ -149,21 +151,24 @@ async function renderIOCGuideDirect(sub) {
     </ul>
   `;
 
-  document.getElementById("details").innerHTML = html + getNotesHTML(sub.subcategory_name);
+  document.getElementById("details").innerHTML =
+    html + getNotesHTML(sub.subcategory_name);
 
   loadNotes(sub.subcategory_name);
 }
 
-// 🔥 STUDY INDEX
+// 🔥 STUDY INDEX (FIXED WITH ID)
 async function renderStudy(sub) {
   const res = await fetch("data/study_data.json");
   const data = await res.json();
 
-  const item = data.find(d =>
-  d.title.trim().toLowerCase() === sub.subcategory_name.trim().toLowerCase()
-);
+  const item = data.find(d => d.id === sub.id);
 
-  if (!item) return;
+  if (!item) {
+    document.getElementById("details").innerHTML =
+      `<h3>No data found for ${sub.subcategory_name}</h3>`;
+    return;
+  }
 
   let html = `
     <h2>${item.title}</h2>
@@ -183,12 +188,13 @@ async function renderStudy(sub) {
     html += `<p>${sec.content}</p>`;
   });
 
-  document.getElementById("details").innerHTML = html + getNotesHTML(item.title);
+  document.getElementById("details").innerHTML =
+    html + getNotesHTML(item.title);
 
   loadNotes(item.title);
 }
 
-// 🔥 NOTES UI (REUSABLE)
+// NOTES UI
 function getNotesHTML(key) {
   return `
     <div style="margin-top:20px;">
@@ -204,7 +210,7 @@ function getNotesHTML(key) {
   `;
 }
 
-// SAVE NOTE (PER TOPIC)
+// SAVE NOTE
 function saveNote(key) {
   const input = document.getElementById("noteInput");
   const text = input.value.trim();
@@ -235,7 +241,7 @@ function loadNotes(key) {
 
   const current = notes[key] || [];
 
-  list.innerHTML = current.map((n, i) => `
+  list.innerHTML = current.map(n => `
     <li>
       ${n.text}<br>
       <small>${n.date}</small>
@@ -243,7 +249,7 @@ function loadNotes(key) {
   `).join("");
 }
 
-// IOC TYPE DETECTION
+// IOC DETECTION
 function detectIOCType(ioc) {
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(ioc)) return "ip";
   if (ioc.startsWith("http")) return "url";
@@ -263,7 +269,8 @@ window.filterTools = function () {
 
   document.querySelectorAll("#toolsList li").forEach(li => {
     const t = li.getAttribute("data-type");
-    li.style.display = (!ioc || t === "all" || t === type) ? "block" : "none";
+    li.style.display =
+      (!ioc || t === "all" || t === type) ? "block" : "none";
   });
 };
 
