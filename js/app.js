@@ -26,7 +26,10 @@ async function showCategory(cat) {
   const details = document.getElementById("details");
 
   subContainer.innerHTML = "";
-  details.innerHTML = `<h3>${cat.category_name}</h3>`;
+  details.innerHTML = `
+  <h3>${cat.category_name}</h3>
+  <p>Select a subcategory to view details</p>
+`;
 
   try {
     const res = await fetch("data/subcategories.json");
@@ -80,10 +83,7 @@ async function showCategory(cat) {
       });
     }
 
-    // AUTO LOAD FIRST
-    if (filteredSubs.length > 0) {
-      showInvestigation(filteredSubs[0]);
-    }
+ 
 
   } catch (e) {
     console.error("Error loading subcategories:", e);
