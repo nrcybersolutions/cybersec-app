@@ -1,10 +1,10 @@
-```css
-/* GLOBAL */
-body {
+/* RESET + GLOBAL */
+html, body {
   margin: 0;
-  font-family: Calibri, Arial, sans-serif;
-  background: #0b1220; /* deep dark */
+  padding: 0;
+  background-color: #0b1220;
   color: #e2e8f0;
+  font-family: Calibri, Arial, sans-serif;
 }
 
 /* HEADER */
@@ -30,6 +30,7 @@ h1 {
 .panel {
   padding: 12px;
   overflow-y: auto;
+  background-color: #0b1220;
 }
 
 .left {
@@ -66,7 +67,7 @@ h4 {
   cursor: pointer;
 }
 
-/* BUTTONS (HD STYLE) */
+/* BUTTONS */
 button {
   width: 100%;
   padding: 9px 10px;
@@ -86,14 +87,12 @@ button {
   transition: all 0.2s ease;
 }
 
-/* HOVER */
 button:hover {
   background: #1f2937;
   border-color: #3b82f6;
   color: #ffffff;
 }
 
-/* ACTIVE CLICK FEEL */
 button:active {
   transform: scale(0.98);
 }
@@ -126,7 +125,7 @@ input {
   padding: 8px;
 }
 
-/* SCROLLBAR (OPTIONAL CLEAN LOOK) */
+/* SCROLLBAR */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -134,4 +133,3 @@ input {
 ::-webkit-scrollbar-thumb {
   background: #1f2937;
 }
-```
