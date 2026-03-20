@@ -31,45 +31,46 @@ async function showCategory(cat) {
   const subContainer = document.getElementById("subcategories");
   subContainer.innerHTML = "";
 
+
   const filteredSubs = subs.filter(s => s.category_id === cat.id);
 
-  // 🔥 GROUP ONLY FOR STUDY INDEX
-  if (cat.id === 7) {
+// 🔥 GROUP ONLY FOR STUDY INDEX
+if (cat.id === 7) {
 
-    const groups = {
-      "Fundamentals": filteredSubs.filter(s => s.id >= 101 && s.id <= 108),
-      "Frameworks": filteredSubs.filter(s => [109, 110].includes(s.id)),
-      "Career & Skills": filteredSubs.filter(s => [111,112,113,114].includes(s.id)),
-      "Books": filteredSubs.filter(s => s.id >= 115)
-    };
+  const groups = {
+    "Fundamentals": filteredSubs.filter(s => s.id >= 101 && s.id <= 108),
+    "Frameworks": filteredSubs.filter(s => [109,110].includes(s.id)),
+    "Career & Skills": filteredSubs.filter(s => [111,112,113,114].includes(s.id)),
+    "Books": filteredSubs.filter(s => s.id >= 115)
+  };
 
-    Object.keys(groups).forEach(groupName => {
-      if (groups[groupName].length === 0) return;
+  Object.keys(groups).forEach(groupName => {
+    if (groups[groupName].length === 0) return;
 
-      const header = document.createElement("h4");
-      header.innerText = groupName;
-      header.style.marginTop = "10px";
-      subContainer.appendChild(header);
+    const header = document.createElement("h4");
+    header.innerText = groupName;
+    header.style.marginTop = "10px";
+    subContainer.appendChild(header);
 
-      groups[groupName].forEach(sub => {
-        const btn = document.createElement("button");
-        btn.innerText = sub.subcategory_name;
-        btn.onclick = () => showInvestigation(sub);
-        subContainer.appendChild(btn);
-      });
-    });
-
-  } else {
-
-    // NORMAL FLOW
-    filteredSubs.forEach(sub => {
+    groups[groupName].forEach(sub => {
       const btn = document.createElement("button");
       btn.innerText = sub.subcategory_name;
       btn.onclick = () => showInvestigation(sub);
       subContainer.appendChild(btn);
     });
+  });
 
-  }
+} else {
+
+  // NORMAL FLOW
+  filteredSubs.forEach(sub => {
+    const btn = document.createElement("button");
+    btn.innerText = sub.subcategory_name;
+    btn.onclick = () => showInvestigation(sub);
+    subContainer.appendChild(btn);
+  });
+
+}
 
   // AUTO LOAD FIRST
   if (filteredSubs.length > 0) {
