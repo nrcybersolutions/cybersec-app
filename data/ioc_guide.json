@@ -3,43 +3,52 @@
     "type": "ip",
     "label": "IP Address",
     "where_to_check": ["Reputation", "Geolocation", "Infrastructure"],
-    "what_to_check": ["Malicious reports", "ASN / Country", "Open ports"],
+    "what_to_check": ["Malicious reports", "ASN / Country", "Open ports", "Scanner activity"],
     "tools": [
       { "name": "VirusTotal", "link": "https://virustotal.com" },
       { "name": "AbuseIPDB", "link": "https://abuseipdb.com" },
+      { "name": "GreyNoise", "link": "https://greynoise.io" },
+      { "name": "Talos Intelligence", "link": "https://talosintelligence.com" },
+      { "name": "IPVoid", "link": "https://ipvoid.com" },
+      { "name": "ThreatFox", "link": "https://threatfox.abuse.ch" },
+      { "name": "AlienVault OTX", "link": "https://otx.alienvault.com" },
+      { "name": "IPinfo", "link": "https://ipinfo.io" },
+      { "name": "MaxMind", "link": "https://maxmind.com" },
+      { "name": "DB-IP", "link": "https://db-ip.com" },
+      { "name": "IP2Location", "link": "https://ip2location.com" },
       { "name": "Shodan", "link": "https://shodan.io" },
-      { "name": "IPinfo", "link": "https://ipinfo.io" }
+      { "name": "Censys", "link": "https://search.censys.io" },
+      { "name": "ZoomEye", "link": "https://zoomeye.org" },
+      { "name": "BinaryEdge", "link": "https://binaryedge.io" }
     ]
   },
 
   {
     "type": "domain",
     "label": "Domain",
-    "where_to_check": ["WHOIS Lookup", "DNS Records", "Passive DNS"],
-    "what_to_check": [
-      "Domain age (new domains = risky)",
-      "Registrar info",
-      "DNS changes / history",
-      "Blacklist / reputation"
-    ],
+    "where_to_check": ["WHOIS", "DNS Records", "Passive DNS", "Reputation"],
+    "what_to_check": ["Domain age", "Registrar", "DNS history", "Subdomains", "Blacklist status"],
     "tools": [
       { "name": "DomainTools", "link": "https://whois.domaintools.com" },
       { "name": "SecurityTrails", "link": "https://securitytrails.com" },
-      { "name": "MXToolbox", "link": "https://mxtoolbox.com" },
-      { "name": "VirusTotal", "link": "https://virustotal.com" }
+      { "name": "RiskIQ PassiveTotal", "link": "https://community.riskiq.com" },
+      { "name": "WhoisXML API", "link": "https://whoisxmlapi.com" },
+      { "name": "ICANN Whois", "link": "https://lookup.icann.org" },
+      { "name": "ViewDNS", "link": "https://viewdns.info" },
+      { "name": "DNSDumpster", "link": "https://dnsdumpster.com" },
+      { "name": "DNSDB", "link": "https://dnsdb.info" },
+      { "name": "crt.sh", "link": "https://crt.sh" },
+      { "name": "SSLLabs", "link": "https://ssllabs.com" },
+      { "name": "Amass", "link": "https://github.com/owasp-amass" },
+      { "name": "Sublist3r", "link": "https://github.com/aboul3la/sublist3r" }
     ]
   },
 
   {
     "type": "url",
     "label": "URL",
-    "where_to_check": ["URL Sandbox", "Reputation Check", "Redirect Analysis"],
-    "what_to_check": [
-      "Final redirect destination",
-      "Phishing patterns (login pages)",
-      "Malicious payloads",
-      "Domain reputation behind URL"
-    ],
+    "where_to_check": ["Sandbox", "Reputation", "Redirect chain"],
+    "what_to_check": ["Final destination", "Phishing indicators", "Payload behavior"],
     "tools": [
       { "name": "URLScan", "link": "https://urlscan.io" },
       { "name": "VirusTotal", "link": "https://virustotal.com" },
@@ -51,36 +60,31 @@
   {
     "type": "hash",
     "label": "File Hash",
-    "where_to_check": ["Malware Databases", "Sandbox Analysis", "Threat Intel"],
-    "what_to_check": [
-      "Detection ratio",
-      "Malware family",
-      "Behavior indicators",
-      "Associated IPs/domains"
-    ],
+    "where_to_check": ["Reputation", "Sandbox", "Threat Intel"],
+    "what_to_check": ["Detection ratio", "Behavior", "Malware family", "IOC relationships"],
     "tools": [
       { "name": "VirusTotal", "link": "https://virustotal.com" },
       { "name": "MalwareBazaar", "link": "https://bazaar.abuse.ch" },
+      { "name": "ThreatFox", "link": "https://threatfox.abuse.ch" },
+      { "name": "AnyRun", "link": "https://any.run" },
       { "name": "Hybrid Analysis", "link": "https://hybrid-analysis.com" },
-      { "name": "AnyRun", "link": "https://any.run" }
+      { "name": "Joe Sandbox", "link": "https://joesandbox.com" },
+      { "name": "Triage Sandbox", "link": "https://tria.ge" },
+      { "name": "Intezer", "link": "https://analyze.intezer.com" }
     ]
   },
 
   {
     "type": "email",
     "label": "Email",
-    "where_to_check": ["Header Analysis", "Authentication Checks", "Threat Intel"],
-    "what_to_check": [
-      "SPF/DKIM/DMARC results",
-      "Sender spoofing",
-      "Mail relay path",
-      "Suspicious links or attachments"
-    ],
+    "where_to_check": ["Header Analysis", "Authentication", "Threat Intel"],
+    "what_to_check": ["SPF/DKIM/DMARC", "Sender spoofing", "Mail path", "Links & attachments"],
     "tools": [
       { "name": "MXToolbox", "link": "https://mxtoolbox.com" },
       { "name": "Google Header Analyzer", "link": "https://toolbox.googleapps.com" },
       { "name": "Microsoft Header Analyzer", "link": "https://mha.azurewebsites.net" },
-      { "name": "PhishTank", "link": "https://phishtank.org" }
+      { "name": "DMARC Analyzer", "link": "https://dmarcanalyzer.com" },
+      { "name": "DKIM Validator", "link": "https://dkimvalidator.com" }
     ]
   }
 ]
