@@ -133,3 +133,30 @@ input {
 ::-webkit-scrollbar-thumb {
   background: #1f2937;
 }
+
+/* 🔥 CATEGORY COLORS */
+#categories button {
+  color: #60a5fa; /* blue */
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 🔥 SUBCATEGORY COLORS */
+#subcategories button {
+  color: #34d399; /* green */
+  font-size: 14px;
+}
+
+/* 🔥 DETAILS SIZE */
+#details {
+  font-size: 16px;
+}
+
+/* 🔥 HOVER IMPROVEMENT */
+#categories button:hover {
+  color: #93c5fd;
+}
+
+#subcategories button:hover {
+  color: #6ee7b7;
+}
