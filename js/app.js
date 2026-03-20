@@ -162,7 +162,12 @@ async function renderStudy(sub) {
   const res = await fetch("data/study_data.json");
   const data = await res.json();
 
-  const item = data.find(d => d.id === sub.id);
+  console.log("SUB:", sub);
+console.log("DATA:", data);
+
+const item = data.find(d => d.id === sub.id);
+
+console.log("MATCHED ITEM:", item);
 
   if (!item) {
     document.getElementById("details").innerHTML =
