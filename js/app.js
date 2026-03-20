@@ -17,7 +17,7 @@ async function loadCategories() {
 // LOAD SUBCATEGORIES
 async function showCategory(cat) {
   document.getElementById("details").innerHTML =
-    `<h3>${cat.category_name}</h3><p>${cat.description}</p>`;
+    `<h3>${cat.category_name}</h3><p>${cat.description || ""}</p>`;
 
   const res = await fetch("data/subcategories.json");
   const subs = await res.json();
@@ -35,15 +35,21 @@ async function showCategory(cat) {
     });
 }
 
-// LOAD INVESTIGATION
+// LOAD INVESTIGATION / STUDY / OSINT
 async function showInvestigation(sub) {
-  
-// 🔥 STUDY INDEX
-if (sub.category_id === 7) {
-  renderStudy(sub);
-  return;
-}
-  
+
+  // 🔥 STUDY INDEX
+  if (sub.category_id === 7) {
+    renderStudy(sub);
+    return;
+  }
+
+  // 🔥 OSINT DIRECT VIEW
+  if (sub.category_id === 5) {
+    renderIOCGuideDirect(sub);
+    return;
+  }
+
   const res = await fetch("data/investigation_data.json");
   const data = await res.json();
 
@@ -56,27 +62,21 @@ if (sub.category_id === 7) {
 
   const tabsDiv = document.getElementById("tabs");
 
-  // 🔥 OSINT DIRECT VIEW
-  if (sub.category_id === 5) {
-    renderIOCGuideDirect(sub);
-    return;
-  }
-
   // EXISTING TABS
   if (item) {
     item.sections.forEach((sec, index) => {
       const btn = document.createElement("button");
       btn.innerText = sec.title;
-      btn.onclick = () => renderSection(sec);
+      btn.onclick = () => renderSection(sec, sub.subcategory_name);
       tabsDiv.appendChild(btn);
 
-      if (index === 0) renderSection(sec);
+      if (index === 0) renderSection(sec, sub.subcategory_name);
     });
   }
 }
 
 // RENDER SECTION
-function renderSection(section) {
+function renderSection(section, subName) {
   let html = `<h3>${section.title}</h3>`;
 
   // TEXT
@@ -100,7 +100,7 @@ function renderSection(section) {
       <ul id="toolsList">
         ${section.content.map(t => `
           <li data-type="${t.type}">
-            <button title="${t.desc || ""}" onclick="openTool('${t.link}')">
+            <button onclick="openTool('${t.link}')">
               ${t.name}
             </button>
           </li>
@@ -109,11 +109,12 @@ function renderSection(section) {
     `;
   }
 
-  document.getElementById("tabContent").innerHTML = html + getNotesHTML();
-  loadNotes();
+  document.getElementById("tabContent").innerHTML = html + getNotesHTML(subName);
+
+  loadNotes(subName);
 }
 
-// 🔥 OSINT DIRECT RENDER
+// 🔥 OSINT DIRECT (NO DROPDOWN)
 async function renderIOCGuideDirect(sub) {
   const res = await fetch("data/ioc_guide.json");
   const data = await res.json();
@@ -129,11 +130,7 @@ async function renderIOCGuideDirect(sub) {
   const type = map[sub.subcategory_name];
   const guide = data.find(i => i.type === type);
 
-  if (!guide) {
-    document.getElementById("details").innerHTML =
-      `<p>No data for ${sub.subcategory_name}</p>`;
-    return;
-  }
+  if (!guide) return;
 
   const html = `
     <h2>${sub.subcategory_name}</h2>
@@ -147,55 +144,76 @@ async function renderIOCGuideDirect(sub) {
     <h3>Recommended Tools</h3>
     <ul>
       ${guide.tools.map(t => `
-        <li>
-          <button onclick="window.open('${t.link}')">${t.name}</button>
-        </li>
+        <li><button onclick="window.open('${t.link}')">${t.name}</button></li>
       `).join("")}
     </ul>
   `;
 
-  document.getElementById("details").innerHTML = html + getNotesHTML();
-  loadNotes();
+  document.getElementById("details").innerHTML = html + getNotesHTML(sub.subcategory_name);
+
+  loadNotes(sub.subcategory_name);
 }
 
-// NOTES HTML (Reusable)
-function getNotesHTML() {
+// 🔥 STUDY INDEX
+async function renderStudy(sub) {
+  const res = await fetch("data/study_data.json");
+  const data = await res.json();
+
+  const item = data.find(d => d.title === sub.subcategory_name);
+
+  if (!item) return;
+
+  let html = `
+    <h2>${item.title}</h2>
+    <p><b>Status:</b> ${item.status}</p>
+  `;
+
+  if (item.link) {
+    html += `
+      <button onclick="window.open('${item.link}')">
+        Open Study Notes
+      </button>
+    `;
+  }
+
+  item.sections?.forEach(sec => {
+    html += `<h3>${sec.title}</h3>`;
+    html += `<p>${sec.content}</p>`;
+  });
+
+  document.getElementById("details").innerHTML = html + getNotesHTML(item.title);
+
+  loadNotes(item.title);
+}
+
+// 🔥 NOTES UI (REUSABLE)
+function getNotesHTML(key) {
   return `
     <div style="margin-top:20px;">
-      <button onclick="toggleNotes()">Show / Hide Notes</button>
+      <h3>Notes</h3>
 
-      <div id="notesContainer" style="display:none; margin-top:10px;">
-        <h3>Notes</h3>
+      <textarea id="noteInput" placeholder="Add note..."
+        style="width:100%; height:80px;"></textarea>
 
-        <textarea id="noteInput" placeholder="Add investigation note..."
-          style="width:100%; height:80px;"></textarea>
+      <button onclick="saveNote('${key}')">Save Note</button>
 
-        <button onclick="saveNote()">Save Note</button>
-
-        <ul id="notesList"></ul>
-      </div>
+      <ul id="notesList"></ul>
     </div>
   `;
 }
 
-// TOGGLE NOTES
-function toggleNotes() {
-  const div = document.getElementById("notesContainer");
-  if (!div) return;
-
-  div.style.display = div.style.display === "none" ? "block" : "none";
-}
-
-// SAVE NOTE
-function saveNote() {
+// SAVE NOTE (PER TOPIC)
+function saveNote(key) {
   const input = document.getElementById("noteInput");
   const text = input.value.trim();
 
   if (!text) return;
 
-  let notes = JSON.parse(localStorage.getItem("soc_notes")) || [];
+  let notes = JSON.parse(localStorage.getItem("soc_notes")) || {};
 
-  notes.push({
+  if (!notes[key]) notes[key] = [];
+
+  notes[key].push({
     text: text,
     date: new Date().toLocaleString()
   });
@@ -203,31 +221,24 @@ function saveNote() {
   localStorage.setItem("soc_notes", JSON.stringify(notes));
   input.value = "";
 
-  loadNotes();
+  loadNotes(key);
 }
 
 // LOAD NOTES
-function loadNotes() {
-  const notes = JSON.parse(localStorage.getItem("soc_notes")) || [];
+function loadNotes(key) {
+  const notes = JSON.parse(localStorage.getItem("soc_notes")) || {};
   const list = document.getElementById("notesList");
 
   if (!list) return;
 
-  list.innerHTML = notes.map((n, index) => `
+  const current = notes[key] || [];
+
+  list.innerHTML = current.map((n, i) => `
     <li>
       ${n.text}<br>
-      <small>${n.date}</small><br>
-      <button onclick="deleteNote(${index})">Delete</button>
+      <small>${n.date}</small>
     </li>
   `).join("");
-}
-
-// DELETE NOTE
-function deleteNote(index) {
-  let notes = JSON.parse(localStorage.getItem("soc_notes")) || [];
-  notes.splice(index, 1);
-  localStorage.setItem("soc_notes", JSON.stringify(notes));
-  loadNotes();
 }
 
 // IOC TYPE DETECTION
@@ -241,7 +252,7 @@ function detectIOCType(ioc) {
 }
 
 // FILTER TOOLS
-window.filterTools = function() {
+window.filterTools = function () {
   const ioc = document.getElementById("iocInput").value.trim();
   const type = detectIOCType(ioc);
 
@@ -255,7 +266,7 @@ window.filterTools = function() {
 };
 
 // OPEN TOOL
-window.openTool = function(baseUrl) {
+window.openTool = function (baseUrl) {
   const ioc = document.getElementById("iocInput")?.value.trim();
 
   if (!ioc) {
@@ -272,50 +283,6 @@ window.openTool = function(baseUrl) {
 
   window.open(url);
 };
-
-async function renderStudy(sub) {
-  const res = await fetch("data/study_data.json");
-  const data = await res.json();
-
-  const item = data.find(d => d.title === sub.subcategory_name);
-
-  if (!item) return;
-
-  let html = `
-    <h2>${item.title}</h2>
-
-    <p><b>Status:</b> ${item.status}</p>
-
-    ${item.link ? `
-      <p>
-        <button onclick="window.open('${item.link}')">
-          Open Study Notes
-        </button>
-      </p>
-    ` : ""}
-  `;
-
-  // sections (optional)
-  item.sections?.forEach(sec => {
-    html += `<h3>${sec.title}</h3>`;
-    html += `<p>${sec.content}</p>`;
-  });
-
-  document.getElementById("details").innerHTML = html + `
-    <div style="margin-top:20px;">
-      <h3>Notes</h3>
-
-      <textarea id="noteInput" placeholder="Add study note..."
-        style="width:100%; height:80px;"></textarea>
-
-      <button onclick="saveNote()">Save Note</button>
-
-      <ul id="notesList"></ul>
-    </div>
-  `;
-
-  loadNotes();
-}
 
 // INIT
 loadCategories();
