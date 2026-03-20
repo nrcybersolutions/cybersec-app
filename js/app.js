@@ -37,6 +37,13 @@ async function showCategory(cat) {
 
 // LOAD INVESTIGATION
 async function showInvestigation(sub) {
+  
+// 🔥 STUDY INDEX
+if (sub.category_id === 7) {
+  renderStudy(sub);
+  return;
+}
+  
   const res = await fetch("data/investigation_data.json");
   const data = await res.json();
 
@@ -265,6 +272,50 @@ window.openTool = function(baseUrl) {
 
   window.open(url);
 };
+
+async function renderStudy(sub) {
+  const res = await fetch("data/study_data.json");
+  const data = await res.json();
+
+  const item = data.find(d => d.title === sub.subcategory_name);
+
+  if (!item) return;
+
+  let html = `
+    <h2>${item.title}</h2>
+
+    <p><b>Status:</b> ${item.status}</p>
+
+    ${item.link ? `
+      <p>
+        <button onclick="window.open('${item.link}')">
+          Open Study Notes
+        </button>
+      </p>
+    ` : ""}
+  `;
+
+  // sections (optional)
+  item.sections?.forEach(sec => {
+    html += `<h3>${sec.title}</h3>`;
+    html += `<p>${sec.content}</p>`;
+  });
+
+  document.getElementById("details").innerHTML = html + `
+    <div style="margin-top:20px;">
+      <h3>Notes</h3>
+
+      <textarea id="noteInput" placeholder="Add study note..."
+        style="width:100%; height:80px;"></textarea>
+
+      <button onclick="saveNote()">Save Note</button>
+
+      <ul id="notesList"></ul>
+    </div>
+  `;
+
+  loadNotes();
+}
 
 // INIT
 loadCategories();
