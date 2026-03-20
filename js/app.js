@@ -25,14 +25,32 @@ async function showCategory(cat) {
   const subContainer = document.getElementById("subcategories");
   subContainer.innerHTML = "";
 
-  const filteredSubs = subs.filter(s => s.category_id === cat.id);
+  const filteredSubs = const filtered = subs.filter(s => s.category_id === cat.id);
 
-  filteredSubs.forEach(sub => {
+// GROUPING LOGIC
+const groups = {
+  "Fundamentals": filtered.filter(s => s.id >= 101 && s.id <= 108),
+  "Frameworks": filtered.filter(s => [109, 110].includes(s.id)),
+  "Career & Skills": filtered.filter(s => [111,112,113,114].includes(s.id)),
+  "Books": filtered.filter(s => s.id >= 115)
+};
+
+// RENDER GROUPS
+Object.keys(groups).forEach(groupName => {
+  if (groups[groupName].length === 0) return;
+
+  const header = document.createElement("h4");
+  header.innerText = groupName;
+  header.style.marginTop = "10px";
+  subContainer.appendChild(header);
+
+  groups[groupName].forEach(sub => {
     const btn = document.createElement("button");
     btn.innerText = sub.subcategory_name;
     btn.onclick = () => showInvestigation(sub);
     subContainer.appendChild(btn);
   });
+});
 
   // 🔥 AUTO LOAD FIRST
   if (filteredSubs.length > 0) {
