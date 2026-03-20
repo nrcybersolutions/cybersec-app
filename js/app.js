@@ -1,7 +1,7 @@
 // LOAD CATEGORIES
 async function loadCategories() {
   try {
-    const res = await fetch("./data/categories.json");
+    const res = await fetch("data/categories.json");
     const categories = await res.json();
 
     const container = document.getElementById("categories");
@@ -21,87 +21,72 @@ async function loadCategories() {
 
 // LOAD SUBCATEGORIES
 async function showCategory(cat) {
+
   const subContainer = document.getElementById("subcategories");
   const details = document.getElementById("details");
 
   subContainer.innerHTML = "";
   details.innerHTML = `<h3>${cat.category_name}</h3>`;
 
-  const res = await fetch("./data/subcategories.json");
-  const subs = await res.json();
+  try {
+    const res = await fetch("data/subcategories.json");
+    const subs = await res.json();
 
-  const filteredSubs = subs.filter(s => s.category_id === cat.id);
+    const filteredSubs = subs.filter(s => s.category_id === cat.id);
 
-  filteredSubs.forEach(sub => {
-    const btn = document.createElement("button");
-    btn.innerText = sub.subcategory_name;
-    btn.onclick = () => showInvestigation(sub);
-    subContainer.appendChild(btn);
-  });
+    // 🔥 GROUPING ONLY FOR STUDY INDEX
+    if (cat.id === 7) {
 
-  if (filteredSubs.length > 0) {
-    showInvestigation(filteredSubs[0]);
-  }
-}
+      const groups = {
+        "Fundamentals": filteredSubs.filter(s => s.id >= 101 && s.id <= 108),
+        "Frameworks": filteredSubs.filter(s => [109,110].includes(s.id)),
+        "Career & Skills": filteredSubs.filter(s => [111,112,113,114].includes(s.id)),
+        "Books": filteredSubs.filter(s => s.id >= 115)
+      };
 
-// 🔥 GROUP ONLY FOR STUDY INDEX
-if (cat.id === 7) {
+      Object.keys(groups).forEach(groupName => {
+        if (groups[groupName].length === 0) return;
 
-  const groups = {
-    "Fundamentals": filteredSubs.filter(s => s.id >= 101 && s.id <= 108),
-    "Frameworks": filteredSubs.filter(s => [109,110].includes(s.id)),
-    "Career & Skills": filteredSubs.filter(s => [111,112,113,114].includes(s.id)),
-    "Books": filteredSubs.filter(s => s.id >= 115)
-  };
+        const header = document.createElement("h4");
+        header.innerText = groupName;
 
-  Object.keys(groups).forEach(groupName => {
-    if (groups[groupName].length === 0) return;
+        const groupDiv = document.createElement("div");
+        groupDiv.style.display = "none";
 
-    const header = document.createElement("h4");
-    header.innerText = groupName;
-    header.style.cursor = "pointer";
-    header.style.background = "#1e2a38";
-    header.style.padding = "8px";
-    header.style.marginTop = "10px";
+        header.onclick = () => {
+          groupDiv.style.display =
+            groupDiv.style.display === "none" ? "block" : "none";
+        };
 
-    // container for items
-    const groupDiv = document.createElement("div");
-    groupDiv.style.display = "none"; // hidden by default
+        subContainer.appendChild(header);
+        subContainer.appendChild(groupDiv);
 
-    // toggle logic
-    header.onclick = () => {
-      groupDiv.style.display =
-        groupDiv.style.display === "none" ? "block" : "none";
-    };
-    
-    subContainer.appendChild(header);
-    subContainer.appendChild(groupDiv);
+        groups[groupName].forEach(sub => {
+          const btn = document.createElement("button");
+          btn.innerText = sub.subcategory_name;
+          btn.onclick = () => showInvestigation(sub);
+          groupDiv.appendChild(btn);
+        });
+      });
 
+    } else {
 
+      // NORMAL FLOW
+      filteredSubs.forEach(sub => {
+        const btn = document.createElement("button");
+        btn.innerText = sub.subcategory_name;
+        btn.onclick = () => showInvestigation(sub);
+        subContainer.appendChild(btn);
+      });
+    }
 
-    groups[groupName].forEach(sub => {
-      const btn = document.createElement("button");
-      btn.innerText = sub.subcategory_name;
-      btn.onclick = () => showInvestigation(sub);
-      groupDiv.appendChild(btn);
-    });
-  });
+    // AUTO LOAD FIRST
+    if (filteredSubs.length > 0) {
+      showInvestigation(filteredSubs[0]);
+    }
 
-} else {
-
-  // NORMAL FLOW
-  filteredSubs.forEach(sub => {
-    const btn = document.createElement("button");
-    btn.innerText = sub.subcategory_name;
-    btn.onclick = () => showInvestigation(sub);
-    subContainer.appendChild(btn);
-  });
-
-}
-
-  // AUTO LOAD FIRST
-  if (filteredSubs.length > 0) {
-    showInvestigation(filteredSubs[0]);
+  } catch (e) {
+    console.error("Error loading subcategories:", e);
   }
 }
 
@@ -118,7 +103,7 @@ async function showInvestigation(sub) {
     return;
   }
 
-  const res = await fetch("./data/investigation_data.json");
+  const res = await fetch("data/investigation_data.json");
   const data = await res.json();
 
   const item = data.find(d => d.subcategory_id === sub.id);
@@ -181,7 +166,7 @@ function renderSection(section, subName) {
 
 // OSINT DIRECT
 async function renderIOCGuideDirect(sub) {
-  const res = await fetch("./data/ioc_guide.json");
+  const res = await fetch("data/ioc_guide.json");
   const data = await res.json();
 
   const map = {
@@ -222,7 +207,7 @@ async function renderIOCGuideDirect(sub) {
 
 // STUDY INDEX
 async function renderStudy(sub) {
-  const res = await fetch("./data/study_data.json");
+  const res = await fetch("data/study_data.json");
   const data = await res.json();
 
   const item = data.find(d => d.id === sub.id);
@@ -262,8 +247,7 @@ function getNotesHTML(key) {
   return `
     <div style="margin-top:20px;">
       <h3>Notes</h3>
-      <textarea id="noteInput" placeholder="Add note..."
-        style="width:100%; height:80px;"></textarea>
+      <textarea id="noteInput" placeholder="Add note..."></textarea>
       <button onclick="saveNote('${key}')">Save Note</button>
       <ul id="notesList"></ul>
     </div>
