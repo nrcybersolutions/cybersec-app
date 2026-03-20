@@ -1,15 +1,122 @@
 [
   {
-    "id": 1,
     "title": "SEG1 – Windows Operating System",
-    "link": "https://your-notes-link.com",
+    "link": "",
     "status": "pending",
-    "sections": [
-      {
-        "title": "Overview",
-        "type": "text",
-        "content": "Core Windows OS concepts for SOC analysts."
-      }
-    ]
+    "sections": [{ "title": "Overview", "type": "text", "content": "Windows internals, processes, services, Event Viewer, registry." }]
+  },
+  {
+    "title": "SEG2 – Networking Foundations",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "TCP/IP, DNS, HTTP, ports, packet flow, OSI model." }]
+  },
+  {
+    "title": "SEG3 – Security Mindset & Analytical Thinking",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Thinking like attacker, log correlation, hypothesis-based analysis." }]
+  },
+  {
+    "title": "SEG4 – Scripting & Programming",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "PowerShell, Python basics for automation and investigation." }]
+  },
+  {
+    "title": "SEG5 – Logs, Alerts & Incident Investigation",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "SIEM, log sources, alert triage, investigation workflow." }]
+  },
+  {
+    "title": "SEG6 – Phishing & Unauthorized Access Handling",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Phishing analysis, credential compromise, account takeover." }]
+  },
+  {
+    "title": "SEG7 – Offensive, Defensive & Cloud Security Basics",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Red vs Blue, Azure/AWS basics, identity security." }]
+  },
+  {
+    "title": "SEG8 – Labs, Home Projects & Hands-on Practice",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Home lab, attack simulation, detection building." }]
+  },
+  {
+    "title": "NIST Cybersecurity Framework",
+    "link": "https://nist.gov",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Identify, Protect, Detect, Respond, Recover." }]
+  },
+  {
+    "title": "MITRE ATT&CK Framework",
+    "link": "https://attack.mitre.org",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Adversary tactics and techniques mapping." }]
+  },
+  {
+    "title": "SOC Analyst Interview Preparation",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Scenario-based Q&A, incident storytelling, tools." }]
+  },
+  {
+    "title": "Threat Hunting Concepts",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Hypothesis hunting, IOC pivoting, anomaly detection." }]
+  },
+  {
+    "title": "Digital Forensics Fundamentals",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Disk, memory, timeline analysis." }]
+  },
+  {
+    "title": "Cloud Security (Azure / AWS)",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "IAM, logging, cloud attack vectors." }]
+  },
+  {
+    "title": "Cybersecurity Book – The Web Application Hacker’s Handbook",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Web vulnerabilities, exploitation techniques." }]
+  },
+  {
+    "title": "Cybersecurity Book – Blue Team Handbook",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Defensive security quick reference." }]
+  },
+  {
+    "title": "Cybersecurity Book – Practical Malware Analysis",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Static & dynamic malware analysis." }]
+  },
+  {
+    "title": "Cybersecurity Book – The Hacker Playbook",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Offensive techniques and methodologies." }]
+  },
+  {
+    "title": "Cybersecurity Book – Incident Response & Computer Forensics",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "IR lifecycle and forensic handling." }]
+  },
+  {
+    "title": "Cybersecurity Book – Security Engineering (Ross Anderson)",
+    "link": "",
+    "status": "pending",
+    "sections": [{ "title": "Overview", "type": "text", "content": "Security architecture and design." }]
   }
 ]
