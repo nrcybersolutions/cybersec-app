@@ -1,17 +1,23 @@
+```javascript
 // LOAD CATEGORIES
 async function loadCategories() {
-  const res = await fetch("data/categories.json");
-  const categories = await res.json();
+  try {
+    const res = await fetch("./data/categories.json");
+    const categories = await res.json();
 
-  const container = document.getElementById("categories");
-  container.innerHTML = "";
+    const container = document.getElementById("categories");
+    container.innerHTML = "";
 
-  categories.forEach(cat => {
-    const btn = document.createElement("button");
-    btn.innerText = cat.category_name;
-    btn.onclick = () => showCategory(cat);
-    container.appendChild(btn);
-  });
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.innerText = cat.category_name;
+      btn.onclick = () => showCategory(cat);
+      container.appendChild(btn);
+    });
+
+  } catch (e) {
+    console.error("Error loading categories:", e);
+  }
 }
 
 // LOAD SUBCATEGORIES
@@ -19,40 +25,53 @@ async function showCategory(cat) {
   document.getElementById("details").innerHTML =
     `<h3>${cat.category_name}</h3><p>${cat.description || ""}</p>`;
 
-  const res = await fetch("data/subcategories.json");
+  const res = await fetch("./data/subcategories.json");
   const subs = await res.json();
 
   const subContainer = document.getElementById("subcategories");
   subContainer.innerHTML = "";
 
-  const filteredSubs = const filtered = subs.filter(s => s.category_id === cat.id);
+  const filteredSubs = subs.filter(s => s.category_id === cat.id);
 
-// GROUPING LOGIC
-const groups = {
-  "Fundamentals": filtered.filter(s => s.id >= 101 && s.id <= 108),
-  "Frameworks": filtered.filter(s => [109, 110].includes(s.id)),
-  "Career & Skills": filtered.filter(s => [111,112,113,114].includes(s.id)),
-  "Books": filtered.filter(s => s.id >= 115)
-};
+  // 🔥 GROUP ONLY FOR STUDY INDEX
+  if (cat.id === 7) {
 
-// RENDER GROUPS
-Object.keys(groups).forEach(groupName => {
-  if (groups[groupName].length === 0) return;
+    const groups = {
+      "Fundamentals": filteredSubs.filter(s => s.id >= 101 && s.id <= 108),
+      "Frameworks": filteredSubs.filter(s => [109, 110].includes(s.id)),
+      "Career & Skills": filteredSubs.filter(s => [111,112,113,114].includes(s.id)),
+      "Books": filteredSubs.filter(s => s.id >= 115)
+    };
 
-  const header = document.createElement("h4");
-  header.innerText = groupName;
-  header.style.marginTop = "10px";
-  subContainer.appendChild(header);
+    Object.keys(groups).forEach(groupName => {
+      if (groups[groupName].length === 0) return;
 
-  groups[groupName].forEach(sub => {
-    const btn = document.createElement("button");
-    btn.innerText = sub.subcategory_name;
-    btn.onclick = () => showInvestigation(sub);
-    subContainer.appendChild(btn);
-  });
-});
+      const header = document.createElement("h4");
+      header.innerText = groupName;
+      header.style.marginTop = "10px";
+      subContainer.appendChild(header);
 
-  // 🔥 AUTO LOAD FIRST
+      groups[groupName].forEach(sub => {
+        const btn = document.createElement("button");
+        btn.innerText = sub.subcategory_name;
+        btn.onclick = () => showInvestigation(sub);
+        subContainer.appendChild(btn);
+      });
+    });
+
+  } else {
+
+    // NORMAL FLOW
+    filteredSubs.forEach(sub => {
+      const btn = document.createElement("button");
+      btn.innerText = sub.subcategory_name;
+      btn.onclick = () => showInvestigation(sub);
+      subContainer.appendChild(btn);
+    });
+
+  }
+
+  // AUTO LOAD FIRST
   if (filteredSubs.length > 0) {
     showInvestigation(filteredSubs[0]);
   }
@@ -61,19 +80,17 @@ Object.keys(groups).forEach(groupName => {
 // LOAD INVESTIGATION / STUDY / OSINT
 async function showInvestigation(sub) {
 
-  // 🔥 STUDY INDEX
   if (sub.category_id === 7) {
     renderStudy(sub);
     return;
   }
 
-  // 🔥 OSINT DIRECT VIEW
   if (sub.category_id === 5) {
     renderIOCGuideDirect(sub);
     return;
   }
 
-  const res = await fetch("data/investigation_data.json");
+  const res = await fetch("./data/investigation_data.json");
   const data = await res.json();
 
   const item = data.find(d => d.subcategory_id === sub.id);
@@ -134,9 +151,9 @@ function renderSection(section, subName) {
   loadNotes(subName);
 }
 
-// 🔥 OSINT DIRECT
+// OSINT DIRECT
 async function renderIOCGuideDirect(sub) {
-  const res = await fetch("data/ioc_guide.json");
+  const res = await fetch("./data/ioc_guide.json");
   const data = await res.json();
 
   const map = {
@@ -175,17 +192,12 @@ async function renderIOCGuideDirect(sub) {
   loadNotes(sub.subcategory_name);
 }
 
-// 🔥 STUDY INDEX (FIXED WITH ID)
+// STUDY INDEX
 async function renderStudy(sub) {
-  const res = await fetch("data/study_data.json");
+  const res = await fetch("./data/study_data.json");
   const data = await res.json();
 
-  console.log("SUB:", sub);
-console.log("DATA:", data);
-
-const item = data.find(d => d.id === sub.id);
-
-console.log("MATCHED ITEM:", item);
+  const item = data.find(d => d.id === sub.id);
 
   if (!item) {
     document.getElementById("details").innerHTML =
@@ -222,12 +234,9 @@ function getNotesHTML(key) {
   return `
     <div style="margin-top:20px;">
       <h3>Notes</h3>
-
       <textarea id="noteInput" placeholder="Add note..."
         style="width:100%; height:80px;"></textarea>
-
       <button onclick="saveNote('${key}')">Save Note</button>
-
       <ul id="notesList"></ul>
     </div>
   `;
@@ -237,7 +246,6 @@ function getNotesHTML(key) {
 function saveNote(key) {
   const input = document.getElementById("noteInput");
   const text = input.value.trim();
-
   if (!text) return;
 
   let notes = JSON.parse(localStorage.getItem("soc_notes")) || {};
@@ -245,7 +253,7 @@ function saveNote(key) {
   if (!notes[key]) notes[key] = [];
 
   notes[key].push({
-    text: text,
+    text,
     date: new Date().toLocaleString()
   });
 
@@ -259,7 +267,6 @@ function saveNote(key) {
 function loadNotes(key) {
   const notes = JSON.parse(localStorage.getItem("soc_notes")) || {};
   const list = document.getElementById("notesList");
-
   if (!list) return;
 
   const current = notes[key] || [];
@@ -318,3 +325,4 @@ window.openTool = function (baseUrl) {
 
 // INIT
 loadCategories();
+```
