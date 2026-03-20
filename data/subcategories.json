@@ -21,6 +21,9 @@
  { "id": 31, "category_id": 5, "subcategory_name": "Domain Tools" },
  { "id": 32, "category_id": 5, "subcategory_name": "URL Tools" },
  { "id": 33, "category_id": 5, "subcategory_name": "Hash Tools" },
- { "id": 34, "category_id": 5, "subcategory_name": "Email Tools" }
+ { "id": 34, "category_id": 5, "subcategory_name": "Email Tools" },
+
+ { "id": 101, "category_id": 7, "subcategory_name": "SEG1 – Windows Operating System" },
+ { "id": 102, "category_id": 7, "subcategory_name": "SEG2 – Networking Foundations" }
 
 ]
