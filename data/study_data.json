@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "SEG1 – Windows Operating System",
+    "link": "https://your-notes-link.com",
+    "status": "pending",
+    "sections": [
+      {
+        "title": "Overview",
+        "type": "text",
+        "content": "Core Windows OS concepts for SOC analysts."
+      }
+    ]
+  }
+]
