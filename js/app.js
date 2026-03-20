@@ -159,7 +159,9 @@ async function renderStudy(sub) {
   const res = await fetch("data/study_data.json");
   const data = await res.json();
 
-  const item = data.find(d => d.title === sub.subcategory_name);
+  const item = data.find(d =>
+  d.title.trim().toLowerCase() === sub.subcategory_name.trim().toLowerCase()
+);
 
   if (!item) return;
 
