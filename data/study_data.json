@@ -21,7 +21,7 @@
     "sections": [
       {
         "title": "Focus Areas",
-        "content": "TCP/IP, ports, DNS, HTTP/HTTPS, packet flow, firewall basics"
+        "content": "TCP/IP, DNS, HTTP/HTTPS, ports, packet flow, firewall basics"
       }
     ]
   },
