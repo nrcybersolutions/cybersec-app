@@ -1,122 +1,202 @@
 [
   {
+    "id": 101,
     "title": "SEG1 – Windows Operating System",
+    "category": "Core Fundamentals",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Windows internals, processes, services, Event Viewer, registry." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "Processes, services, registry, event logs, user sessions, startup items"
+      }
+    ]
   },
   {
+    "id": 102,
     "title": "SEG2 – Networking Foundations",
+    "category": "Core Fundamentals",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "TCP/IP, DNS, HTTP, ports, packet flow, OSI model." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "TCP/IP, ports, DNS, HTTP/HTTPS, packet flow, firewall basics"
+      }
+    ]
   },
   {
+    "id": 103,
     "title": "SEG3 – Security Mindset & Analytical Thinking",
+    "category": "Security Fundamentals",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Thinking like attacker, log correlation, hypothesis-based analysis." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "Think like attacker, identify anomalies, correlation, investigation mindset"
+      }
+    ]
   },
   {
+    "id": 104,
     "title": "SEG4 – Scripting & Programming",
+    "category": "Automation",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "PowerShell, Python basics for automation and investigation." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "Python basics, PowerShell, automation, parsing logs"
+      }
+    ]
   },
   {
+    "id": 105,
     "title": "SEG5 – Logs, Alerts & Incident Investigation",
+    "category": "SOC Operations",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "SIEM, log sources, alert triage, investigation workflow." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "SIEM, alert triage, log correlation, investigation workflow"
+      }
+    ]
   },
   {
+    "id": 106,
     "title": "SEG6 – Phishing & Unauthorized Access Handling",
+    "category": "Incident Response",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Phishing analysis, credential compromise, account takeover." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "Email analysis, credential theft, login anomalies, containment"
+      }
+    ]
   },
   {
+    "id": 107,
     "title": "SEG7 – Offensive, Defensive & Cloud Security Basics",
+    "category": "Security Domains",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Red vs Blue, Azure/AWS basics, identity security." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "Red vs Blue, Azure basics, IAM, attack surface"
+      }
+    ]
   },
   {
+    "id": 108,
     "title": "SEG8 – Labs, Home Projects & Hands-on Practice",
+    "category": "Practical Skills",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Home lab, attack simulation, detection building." }]
+    "sections": [
+      {
+        "title": "Focus Areas",
+        "content": "TryHackMe, home lab, SIEM practice, malware analysis"
+      }
+    ]
   },
   {
+    "id": 109,
     "title": "NIST Cybersecurity Framework",
+    "category": "Security Framework",
     "link": "https://nist.gov",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Identify, Protect, Detect, Respond, Recover." }]
+    "sections": []
   },
   {
+    "id": 110,
     "title": "MITRE ATT&CK Framework",
+    "category": "Security Framework",
     "link": "https://attack.mitre.org",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Adversary tactics and techniques mapping." }]
+    "sections": []
   },
   {
+    "id": 111,
     "title": "SOC Analyst Interview Preparation",
+    "category": "Career Development",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Scenario-based Q&A, incident storytelling, tools." }]
+    "sections": []
   },
   {
+    "id": 112,
     "title": "Threat Hunting Concepts",
+    "category": "Blue Team Skills",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Hypothesis hunting, IOC pivoting, anomaly detection." }]
+    "sections": []
   },
   {
+    "id": 113,
     "title": "Digital Forensics Fundamentals",
+    "category": "Investigation Skills",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Disk, memory, timeline analysis." }]
+    "sections": []
   },
   {
+    "id": 114,
     "title": "Cloud Security (Azure / AWS)",
+    "category": "Cloud Security",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "IAM, logging, cloud attack vectors." }]
+    "sections": []
   },
   {
+    "id": 115,
     "title": "Cybersecurity Book – The Web Application Hacker’s Handbook",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Web vulnerabilities, exploitation techniques." }]
+    "sections": []
   },
   {
+    "id": 116,
     "title": "Cybersecurity Book – Blue Team Handbook",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Defensive security quick reference." }]
+    "sections": []
   },
   {
+    "id": 117,
     "title": "Cybersecurity Book – Practical Malware Analysis",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Static & dynamic malware analysis." }]
+    "sections": []
   },
   {
+    "id": 118,
     "title": "Cybersecurity Book – The Hacker Playbook",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Offensive techniques and methodologies." }]
+    "sections": []
   },
   {
+    "id": 119,
     "title": "Cybersecurity Book – Incident Response & Computer Forensics",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "IR lifecycle and forensic handling." }]
+    "sections": []
   },
   {
+    "id": 120,
     "title": "Cybersecurity Book – Security Engineering (Ross Anderson)",
+    "category": "Cyber Books",
     "link": "",
     "status": "pending",
-    "sections": [{ "title": "Overview", "type": "text", "content": "Security architecture and design." }]
+    "sections": []
   }
 ]
