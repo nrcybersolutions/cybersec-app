@@ -1,1 +1,147 @@
-ddd
+[
+  {
+    "type": "domain",
+    "label": "Domain",
+
+    "highlighted": [
+      {
+        "tab": "VirusTotal - Detection Tab",
+        "points": [
+          "🔴 Multiple detections → strong indicator",
+          "⚠️ Even 1–2 detections → suspicious (early phishing infra)"
+        ]
+      },
+      {
+        "tab": "Whois",
+        "points": [
+          "🚩 Domain age < 30 days → phishing",
+          "⚠️ Privacy enabled → hides owner",
+          "🚩 Suspicious TLD (.xyz, .top, .icu)"
+        ]
+      },
+      {
+        "tab": "Google / OSINT",
+        "points": [
+          "🔴 Brand impersonation / typo domain",
+          "⚠️ No legit presence online"
+        ]
+      },
+      {
+        "tab": "VirusTotal - Relations Tab",
+        "points": [
+          "⚠️ Many unrelated domains → shared malicious infra",
+          "🚩 Suspicious TLD mix → attacker infra"
+        ]
+      },
+      {
+        "tab": "URLScan",
+        "points": [
+          "🔴 Login + redirect → phishing",
+          "⚠️ Downloads / obfuscated scripts → suspicious"
+        ]
+      },
+      {
+        "tab": "SOC - Final View",
+        "points": [
+          "🔴 Multiple red flags → phishing domain"
+        ]
+      }
+    ],
+
+    "details": [
+      {
+        "tab": "VirusTotal - Detection Tab",
+        "points": [
+          "Detection ratio (ex: 2/94, 10/94)",
+          "Even 1–2 detections → suspicious (early phishing infra)",
+          "Multiple detections → strong indicator",
+          "Check WHO flagged (Microsoft, Fortinet → strong)",
+          "Labels: Phishing / Malware / Spam / C2",
+          "Ignore clean majority → focus on positives",
+          "Conflicting signals → investigate further",
+          "Conclusion: Multiple vendors flagged → strong suspicion"
+        ]
+      },
+      {
+        "tab": "Whois",
+        "points": [
+          "Creation date → NEW domain = high suspicion",
+          "Domain age < 30 days → phishing indicator",
+          "Registrar → cheap / abuse-friendly (NameSilo etc.)",
+          "Privacy enabled → hides owner",
+          "Org info missing / masked → suspicious",
+          "Country mismatch → suspicious",
+          "Nameservers → shared hosting",
+          "Domain type (.xyz, .top, .icu, .vip) → common abuse TLDs",
+          "Legit domains (.com/.org) → still verify",
+          "Conclusion: New + privacy + suspicious TLD = phishing infra"
+        ]
+      },
+      {
+        "tab": "MXToolbox",
+        "points": [
+          "DNS records missing → inactive / staging domain",
+          "No MX → not email-enabled (can still host phishing)"
+        ]
+      },
+      {
+        "tab": "Google / OSINT",
+        "points": [
+          "Search in Google → does legit site exist?",
+          "Compare with real domain (gofile.io vs gofile.host)",
+          "Brand impersonation → phishing",
+          "Typos / homoglyph (micros0ft, paypaI) → suspicious",
+          "No presence / unknown → suspicious",
+          "Old forum mentions → weak signal",
+          "Conclusion: Lookalike + no legit presence = phishing"
+        ]
+      },
+      {
+        "tab": "VirusTotal - Relations Tab",
+        "points": [
+          "Passive DNS → many domains on same IP",
+          "Many unrelated domains → shared malicious infra",
+          "Suspicious TLD mix (.xyz, .icu, .top) → attacker infra",
+          "Contacted IPs → backend infrastructure",
+          "Contacted URLs → payload / redirect",
+          "Communicating files → malware interaction",
+          "Legit domains (Microsoft, Google) may appear → ignore noise",
+          "High volume → attacker infrastructure",
+          "Conclusion: Many random domains + suspicious TLDs = attacker infra"
+        ]
+      },
+      {
+        "tab": "URLScan",
+        "points": [
+          "Login page → phishing",
+          "Redirect chain → hides destination",
+          "Downloads (.exe, .zip) → malware delivery",
+          "External calls → tracking / C2",
+          "HTML only → phishing likely",
+          "Obfuscated JS / encoded scripts → suspicious",
+          "Cookie / data collection → credential theft",
+          "Conclusion: Login + redirect + unknown domain = phishing"
+        ]
+      },
+      {
+        "tab": "SOC - Correlation",
+        "points": [
+          "New domain + privacy enabled",
+          "Lookalike / typo domain",
+          "Suspicious TLD (.xyz, .top, .icu)",
+          "No DNS / inactive infra",
+          "Many unrelated domains on same infra",
+          "Downloads / redirects",
+          "No legit presence online",
+          "NEVER rely only on WHOIS",
+          "Combine: Age + Look + DNS + Behavior",
+          "Clean VT ≠ safe",
+          "Legit infra can host malicious domains",
+          "Always correlate with URL/IP activity",
+          "Conclusion: Domain decision = correlation-based",
+          "FINAL: New domain + privacy + impersonation + suspicious infra = phishing domain"
+        ]
+      }
+    ]
+  }
+]
