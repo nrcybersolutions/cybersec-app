@@ -93,6 +93,12 @@ async function showCategory(cat) {
 // LOAD INVESTIGATION / STUDY / OSINT
 async function showInvestigation(sub) {
 
+  // 🔥 NEW: IOC FULL VIEW
+if (sub.subcategory_name.includes("Domain")) {
+  renderIOCFullView("domain");
+  return;
+}
+
   if (sub.category_id === 7) {
     renderStudy(sub);
     return;
@@ -353,6 +359,55 @@ window.openTool = function (baseUrl) {
 
   window.open(url);
 };
+
+async function renderIOCFullView(type) {
+  const res = await fetch("data/ioc_full_view.json");
+  const data = await res.json();
+
+  const item = data.find(d => d.type === type);
+  if (!item) return;
+
+  let html = `
+    <div style="display:flex; gap:15px;">
+
+      <!-- COLUMN 1 -->
+      <div style="width:15%;">
+        <h2>${item.label}</h2>
+      </div>
+
+      <!-- COLUMN 2 -->
+      <div style="width:35%;">
+        <h3>Key Highlights</h3>
+        ${item.highlighted.map(sec => `
+          <div style="margin-bottom:10px;">
+            <b style="color:#60a5fa;">[${sec.tab}]</b>
+            <ul>
+              ${sec.points.map(p => `<li>${p}</li>`).join("")}
+            </ul>
+          </div>
+        `).join("")}
+      </div>
+
+      <!-- COLUMN 3 -->
+      <div style="width:50%;">
+        <h3>Detailed Analysis</h3>
+        ${item.details.map(sec => `
+          <div style="margin-bottom:15px;">
+            <b style="color:#34d399;">[${sec.tab}]</b>
+            <ul>
+              ${sec.points.map(p => `<li>${p}</li>`).join("")}
+            </ul>
+          </div>
+        `).join("")}
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById("details").innerHTML = html;
+}
+
+
 
 // INIT
 loadCategories();
