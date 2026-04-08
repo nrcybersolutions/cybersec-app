@@ -94,7 +94,8 @@ async function showCategory(cat) {
 async function showInvestigation(sub) {
 
   // 🔥 NEW: IOC FULL VIEW
-if (sub.subcategory_name.includes("Domain")) {
+if (sub.subcategory_name.toLowerCase().includes("domain")) {
+  console.log("DOMAIN VIEW TRIGGERED");
   renderIOCFullView("domain");
   return;
 }
